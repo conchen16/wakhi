@@ -21,7 +21,5 @@
 
 (
 ((:path . "matrix") (:content . "matrix: A test suite created automatically from the test sentences given in the Grammar Matrix questionnaire."))
-((:path . "corpus") (:content . "Wakhi"))
-; New test suites here. For example:
-; ((:path . "new-test-suite") (:content . "New Test Suite: A description of the new test suite located at the subdirectory new-test-suite."))
+((:path . "lab2") (:content . "Test suite collected for Lab 2"))
 )

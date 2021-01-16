@@ -61,10 +61,6 @@ noun-pc8_lrt1-suffix :=
 %suffix (* -nukuzg)
 noun-pc8_lrt1-lex-rule.
 
-noun-pc9_lrt1-suffix :=
-%suffix (* -ak)
-noun-pc9_lrt1-lex-rule.
-
 noun-pc10_lrt1-suffix :=
 %suffix (* -a)
 noun-pc10_lrt1-lex-rule.
@@ -148,10 +144,6 @@ verb-pc14_lrt1-lex-rule.
 verb-pc14_lrt2-suffix :=
 %suffix (* nə=)
 verb-pc14_lrt2-lex-rule.
-
-verb-pc17_lrt1-suffix :=
-%suffix (* -i)
-verb-pc17_lrt1-lex-rule.
 
 verb-pc17_lrt2-suffix :=
 %suffix (* =i)

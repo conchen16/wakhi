@@ -1,4 +1,5 @@
 ;;; -*- Mode: LISP; Syntax: Common-Lisp; Package: LKB; Coding: utf-8 -*-
+(setq mrs::*normalize-predicates-p* nil)
 
 ;;;
 ;;; First, load a number of LKB-specific settings; typically no need to look
@@ -107,11 +108,6 @@
 (lkb-pathname (parent-directory) "trigger.mtr"))
 "Generation trigger rules"
 :filter nil :task :trigger :recurse nil :edges 200 :subsume nil)
-
-
-;;; Added Jan 2021 for compatibility with LKB-FOS
-
-(setq mrs::*normalize-predicates-p* nil)
 
 ;;;
 ;;; Matrix-derived grammars often have stable enough semantic
