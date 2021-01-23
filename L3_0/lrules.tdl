@@ -1,0 +1,8 @@
+;;; -*- Mode: TDL; Coding: utf-8 -*-
+verb-pc27_lrt1-lex := verb-pc27_lrt1-lex-rule.
+
+verb-pc28_lrt1-lex := verb-pc28_lrt1-lex-rule.
+
+verb-pc29_lrt1-lex := verb-pc29_lrt1-lex-rule.
+
+verb-pc30_lrt1-lex := verb-pc30_lrt1-lex-rule.

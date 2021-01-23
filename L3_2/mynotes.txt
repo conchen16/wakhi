@@ -1,0 +1,3 @@
+removed =ki,et,em
+kept =en and added 1pl feature
+added new lrt to same position class -et with feature 2sg

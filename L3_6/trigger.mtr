@@ -1,0 +1,34 @@
+;;; -*- Mode: TDL; Coding: utf-8 -*-
+;;; Semantically Empty Lexical Entries
+
+tumrə_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.TENSE fut ] >,
+    FLAGS.TRIGGER "tumrə_2" ].
+
+çat_3_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "çat_3" ].
+
+bland_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ PRED "non_existing_rel" ] >,
+    FLAGS.TRIGGER "bland" ].
+
+ki_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT cmpl ] >,
+    FLAGS.TRIGGER "ki" ].
+
+maʐ_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.MOOD oblig ] >,
+    FLAGS.TRIGGER "maʐ_2" ].
+
+taw_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.MOOD oblig ] >,
+    FLAGS.TRIGGER "taw_2" ].
+
+sav_2_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.MOOD oblig ] >,
+    FLAGS.TRIGGER "sav_2" ].
+
+tsəj_gr := arg0e_gtr &
+  [ CONTEXT.RELS.LIST < [ ARG0.E.ASPECT cmpl ] >,
+    FLAGS.TRIGGER "tsəj" ].

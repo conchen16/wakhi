@@ -1,0 +1,206 @@
+Language: Wakhi
+Language code: wbl1
+Lines: orth orth-seg gloss translat
+Author: Connie Chen, Dongqi Su
+Date: January 15, 2021
+Source a: "From Oral to Written: A Text-linguistic Study of Wakhi Narratives" by Jaroslava Obrtelova
+
+#Ex 1
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm puv-ak pers-i
+wuz=əm puv-ak pers-i
+1SG.NOM=1SG drink-INF ask-PST
+'I ask to drink'
+
+#Ex 2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rəd-ak pers-i
+wuz=əm rəd-ak pers-i
+1SG.NOM=1SG run-INF ask-PST
+'I ask to run'
+
+#Ex 3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rɨçɨp-ak pers-i
+wuz=əm rɨçɨp-ak pers-i
+1SG.NOM=1SG sleep-INF ask-PST
+'I ask to sleep'
+
+#Ex 4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rondoj-ak pers-i
+wuz=əm rondoj-ak pers-i
+1SG.NOM=1SG jump-INF ask-PST
+'I ask to jump'
+
+#Ex 5
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm pats-ak pers-i
+wuz=əm pats-ak pers-i
+1SG.NOM=1SG cook-INF ask-PST
+'I ask to cook'
+
+#Ex 6
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm puv-i
+wuz=əm puv-i
+1SG.NOM=1SG drink-PST
+`I drank'
+
+#Ex 7
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rəd-i
+wuz=əm rəd-i
+1SG.NOM=1SG run-PST
+`I ran'
+
+#Ex 8
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rɨçɨp-i
+wuz=əm rɨçɨp-i
+1SG.NOM=1SG sleep-PST
+`I slept'
+
+#Ex 9
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rondoj-i
+wuz=əm rondoj-i
+1SG.NOM=1SG jump-PST
+`I jumped'
+
+#Ex 10
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm pats-i
+wuz=əm pats-i
+1SG.NOM=1SG cook-PST
+`I cooked'
+
+#Ex 11
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm puv=ki pers-i
+wuz=əm puv=ki pers-i
+1SG.NOM=1SG drink=COND ask-PST
+'I ask to drink'
+
+#Ex 12
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rəd=ki pers-i
+wuz=əm rəd=ki pers-i
+1SG.NOM=1SG run=COND ask-PST
+'I ask to run'
+
+#Ex 13
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rɨçɨp=ki pers-i
+wuz=əm rɨçɨp=ki pers-i
+1SG.NOM=1SG sleep=COND ask-PST
+'I ask to sleep'
+
+#Ex 14
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rondoj=ki pers-i
+wuz=əm rondoj=ki pers-i
+1SG.NOM=1SG jump=COND ask-PST
+'I ask to jump'
+
+#Ex 15
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm pats=ki pers-i
+wuz=əm pats=ki pers-i
+1SG.NOM=1SG cook=COND ask-PST
+'I ask to cook'
+
+#Ex 16
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm puv=ki
+wuz=əm puv=ki
+1SG.NOM=1SG drink=COND
+`I drank'
+
+#Ex 17
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rəd=ki
+wuz=əm rəd=ki
+1SG.NOM=1SG run=COND
+`I ran'
+
+#Ex 18
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rɨçɨp=ki
+wuz=əm rɨçɨp=ki
+1SG.NOM=1SG sleep=COND
+`I slept'
+
+#Ex 19
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rondoj=ki
+wuz=əm rondoj=ki
+1SG.NOM=1SG jump=COND
+`I jumped'
+
+#Ex 20
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm pats=ki
+wuz=əm pats=ki
+1SG.NOM=1SG cook=COND
+`I cooked'

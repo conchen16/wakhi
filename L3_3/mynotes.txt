@@ -1,0 +1,4 @@
+-en has -GER and 1/3PL.NPST
+added GER form to features section
+in verb pc4 lrt 1 i removed npst tense feature from -en
+i added ger form feature
