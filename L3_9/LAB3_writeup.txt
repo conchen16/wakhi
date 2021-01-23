@@ -1,0 +1,172 @@
+LING 567
+LAB 3
+Connie Chen
+Dongqi Su
+
+
+Our workflow this week:
+We ran a simple matching algorithm to identify lexical rules and their corresponding IGT with frequency. Here is a list we came up with. By the end of this week. We only cleaned up a few of the lexical rules shown below. 
+
+DONE:
+    -tu {'-PLPF': 126} 
+    -ən {'-1/3PL.NPST': 12, '-GER': 69} 
+-i {'-OBL': 66, '-PST': 35}
+-a {'-MED': 436, '-NO_GLOSS': 2, '-ADJ': 1}
+-iʃt {'-PL.NOM': 29}
+TODO:
+    =i {'=3SG': 129}
+=əp {'=FUT': 45}
+=ʂ {'=PROG': 164} 
+-w {'-PRO': 155}
+=əv {'=3PL': 11, '=2PL': 4}
+-r {'-DAT': 90}
+-tk {'-PRF': 58}
+=əm {'=1SG': 68}
+-t {'-PST': 169, '-3SG.NPST': 76, '-DIST': 1}
+-m {'-PROX': 54}
+-n {'-ABL': 55}
+-əm {'-1SG.NPST': 105}
+-ung {'-PRTC': 2}
+-v {'-OBL.PL': 21}
+-∅ {'-2SG.NPST': 16}
+nə= {'NEG=': 22}
+=bə {'=also': 8}
+-ak {'-INF': 19}
+=ki {'=COND': 4}
+=a {'=QM': 10}
+=ət {'=2SG': 12, '=and': 15}
+çɨ= {'REFL.POSS=': 5}
+-əv {'-2PL.NPST': 5}
+-iʝ {'-N>ADJ': 1}
+-ək {'-DIMINUTIVE': 2}
+mə- {'NEG.SBJNC-': 4}
+-ɨv {'-CAUS': 5}
+-ing {'-NO_GLOSS': 1}
+=ən {'=1PL': 2}
+-jun {'-ADJVLZR': 1}
+-nukuzg {'-AGT.NMLZR': 2}
+=et {'=and': 1}
+a- {'EMPH-': 1}
+
+
+
+Question 1:
+1.1 Initial test corpus
+1. How many items parsed? 185 / 683
+2. What is the average number of parses per parsed item? 7.71
+3. How many parses did the most ambiguous item receive? 136
+4.What sources of ambiguity can you identify?
+Both j-a-w and j-a can be parsed as noun phrases or determiner phrases.
+1.2 Initial testsuite
+1. How many items parsed? 8 / 20
+
+2. What is the average number of parses per parsed item? 7.25
+3. How many parses did the most ambiguous item receive? 23
+4.What sources of ambiguity can you identify? 
+The suffix “-i” can refer to past tense as well as person and number information on a noun. 
+1.3 Final test corpus
+1. How many items parsed? 155 / 683
+
+2. What is the average number of parses per parsed item? 6.65
+3. How many parses did the most ambiguous item receive? 136
+4.What sources of ambiguity can you identify? 
+“=ət” is a conjunction as well as an subject-marking enclitic
+1.4 Final testsuite
+1. How many items parsed? 8 / 20
+
+2. What is the average number of parses per parsed item? 7.25
+3. How many parses did the most ambiguous item receive? 23
+4.What sources of ambiguity can you identify?
+Sentences that have both the subject-agreement markers on the noun and verb are parsing when they should be ungrammatical.
+
+Semantics: 
+1) 480@@@@-1@@wuz=əm plan-t-i@@@@1@2@1SG.NOM ==1SG fall -PST -PST // I fell.@@
+The semantics looks reasonable. There are predictions “exist_q_rel”, “_pron_n_rel”, and “_fall_v_rel”. “exist_q_rel” modifies “_pron_n_rel”, and “_fall_v_rel” take “_pron_n_rel” as the second argument.
+2) 290@@@@-1@@maʐ taw win-tu@@@@1@3@1SG.OBL 2SG.OBL see -PLPF // I saw you.@@
+The semantics doesn’t seem to match up with the IGT. There is a _and_coord_rel predication that does not exist in the IGT. The ARG0 in the verb predication _see_v_rel is identified with the INDEX of the sentence.
+3) 1850@@@@-1@@zəm di-tu@@@@1@2@snow hit -PLPF // It snowed.@@
+The semantics looks reasonable. The predications describing snow are exist_q_rel and _snow_n_rel where ARG0 of _snow_n_rel is identified with the ARG0 of the exist_q_rel that comes from the constituent being an NP. The verb has the _hit_v_rel predication where it’s ARG2 is identified with the ARG0 of both exist_q_rel and _snow_n_rel. The ARG0 of _hit_v_rel is identified with the INDEX of the sentence. This is the same semantics as the previous grammar.
+4) 2140@@@@-1@@sajiʃt=əv=ʂ gəfs-t-i@@@@1@2@2PL.NOM ==2PL =PROG run -PST -PST // You (pl.) were running.@@
+The semantics looks reasonable. There is a predication for sajiʃt=əv=ʂ that has _pron_n_rel since it is a pronoun as well as an exist_q_rel predication that is a result of the constituent being an NP. The verb gəfs-t-i also has the reasonable predication of _run_v_rel which takes the pronoun as its ARG1. The ARG0 of value of the verb is identified with the INDEX of the sentence. This is the same semantics as the previous grammar.
+5) 2410@@@@-1@@john-i maʐ win-t@@@@1@3@NO_GLOSS -OBL 1SG.OBL see -PST // John saw me.@@
+The semantics does not match up with the IGT. In the MRS, we are missing the predication for maʐ. The _and_coord_rel predication does not belong because there is no coordination in the IGT. Additionally, the INDEX of the sentence is identified with the C-ARG of the _and_coord_rel which isn’t correct because there is coordination in the IGT. This is the same semantics as the previous grammar.
+6) 2490@@@@-1@@j-a-w-i çat win-tu@@@@1@3@DEM -MED PRO -OBL REFL see -PLPF // S/he saw herself/himself.@@
+The semantics does not match up with the IGT. The _and_coord_rel does not belong because there is no coordination occurring in the sentence according to the IGT. Additionally the exist_q_rel predication with ARG0 identified with the C-ARG of the coordination predication. The _see_v_rel has an ARG2 value identified with the C-ARG of the coordination predication and the irrelevant exist_q_rel predication. This is the same semantics as the previous grammar.
+7) 3950@@@@-1@@wuz=ʂ dam xaʂ-əm@@@@1@3@1SG.NOM =PROG breath pull -1SG.NPST // I breathe.@@
+The semantics looks reasonable. The exist_q_rel predication with ARG0 identified with the C-ARG of the coordination predication. The _see_v_rel has an ARG2 value identified with the C-ARG of the coordination predication and the irrelevant exist_q_rel predication. The ARG0 of value of the verb is identified with the INDEX of the sentence.
+The semantics match up with the IGT. 
+8) 3170@@@@-1@@wuz=əm retʂ-tu@@@@1@2@1SG.NOM ==1SG go -PLPF // I left.@@
+The semantics looks reasonable. There is a predication for wuz=əm that has _pron_n_rel since it is a pronoun as well as an exist_q_rel predication that is a result of the constituent being an NP. The verb retʂ-tu also has the reasonable predication of _go_v_rel which takes the pronoun as its ARG1. The ARG0 of value of the verb is identified with the INDEX of the sentence. This is the same semantics as the previous grammar.
+9) 3930@@@@-1@@retʂ-tu=əm@@@@1@1@go -PLPF ==1SG // I left.@@
+The semantics looks reasonable.The only predication we have is _go_v_rel. The pronoun is encoded in ARG1 as 1SG. This is the same semantics as the previous grammar.
+10) 1480@@@@-1@@tu=əp gəfs-∅@@@@1@2@2SG.NOM =FUT run -2SG.NPST // You will run.@@
+ The semantics looks reasonable. There are predictions “exist_q_rel”, “_pron_n_rel”, and “_fall_v_rel”. “exist_q_rel” modifies “_pron_n_rel”, and “_run_v_rel” take “_pron_n_rel” as the second argument.
+
+Question 2:
+2.1 The first phenomenon is that agreement clitics cannot co-occur with a verbal agreement suffix. The agreement clitics look very similar to the agreement suffixes. The difference is that one begins with “=” and the other a “-”. In example 5 of the testsuite,
+wuz pats-əm
+1SG.NOM cook-1SG.NPST
+'I am cooking'
+only the verb has a subject-marking agreement attached to the stem of the word. However, in example 10,
+wuz=əm pats-əm
+1SG.NOM=1SG cook-1SG.NPST
+'I am cooking'
+There is agreement marking attached to both the subject and verb stems, making it ungrammatical.
+
+2.2 The second phenomenon is that coordination in Wakhi can occur as a conjunction, juxtaposition, or disjunction. One of the ways to conjoin two phrases is by adding the enclitic “=ət”. It is added to the end of the first element in the conjunction. In example 12,
+wuz=əm rondoj-i=ət rondoj-i
+1SG.NOM=1SG jump-PST=and jump-PST
+'I jumped and jumped'
+the conjunction occurs right after the past tense inflection on the verb stem. However, in example 14,
+    tu=ət puv=ət-i rəd-i
+2SG.NOM=2SG drink=and-PST run-PST
+'You drank and ran'
+The conjunction occurs after the verb stem and before the past tense inflection. The conjunction seems to only appear after the verb stem has been fully inflected, making this example ungrammatical.
+
+2.3 Third phenomenon is that a demonstrative can appear before a noun in Wakhi. One such demonstrative is “j-a”. The gloss in the text corpus refers to it being of middle distance. In example 16,
+j-a-w j-a kitob dʒoj-i
+DEM-MED-PRO DEM-MED book read-PST
+‘He read that book’
+the demonstrative comes right before the noun. However in example 20,
+wuz=əm a-j kitob dʒoj-i
+1SG.NOM=1SG MED-DEM book read-PST
+'I read that book'
+the demonstrative comes after the MED, making it ungrammatical. 
+
+
+
+Question 3:
+(Note: We had a difficult time finding IGT examples to show our changes since our coverage dropped with our new grammar. After comparing the initial parse results with the new parse results, I found 3 parses that had fewer distinct analyses than those of the initial grammar. They are in 3.1)
+3.1 We deleted the lexical rule types of noun position classes containing the nominative subject-marking suffixes and enclitics. The subject-marking enclitics we have seen in the test corpus are the 1SG =əm, 2SG =ət, 1PL =ən, and 2PL and PL =əv. The non-past tense subject-marking suffixes we have seen in the test corpus are 1SG -əm, 2SG -i, 1PL -ən, and 2PL -əv. We did this because they were all appearing in different position classes with different inputs. We also deleted the noun position class lexical rule type with the “-∅” suffix because the instance of this was not supported in the data although the descriptive grammar states it’s a possible 2SG subject-marking suffix.
+#730
+j-a-iʃt=ʂ gəfs-ən
+DEM -MED -PL.NOM =PROG run -1/3PL.NPST
+They are running.
+
+#2700
+j-a-w wuzan di-ən rəmɨʂ-tk .
+EM -MED PRO swim -GER forget -PRF .
+He forgot to swim.
+
+#4890
+sak=ʂ gəfs-ən
+1PL.NOM =PROG run -1/3PL.NPST
+We are running.
+
+3.2 We added a new position class called NOM_Pronoun_Enclitics. Here, we added 5 lexical rule types titled 1SG_NOM_Enclitic, 2SG_NOM_Enclitic, 1PL_NOM_Enclitic, 2PL_NOM_Enclitic, and 3PL_NOM_Enclitic. We gave them each morphotactic constraints of only occurring on nominative pronouns with the same person and case feature as the suffix. For example, “wuz” is a 1SG.NOM pronoun in the lexicon and it is the required morphotactic constraint of the lexical rule type 1SG_NOM_Enclitic that has 1SG features and an “=əm” suffix.
+
+3.3 We added a new position class called NOM_Pronoun_Suffix. There are 4 lexical rule types added to this position class with the same naming convention as the previous position class except the lexical rule types ended in suffixes and not enclitics (i.e. 1SG_NOM_Suffix). The information in each lexical rule type follows the same logic as the previous position class except the affixes are suffixes and not enclitics. We made position classes distinguishing between the enclitics and suffixes because it seemed more organized.
+
+3.4 Upon looking to delete instances of the above suffixes and enclitics to simplify the grammar prior to adding the new noun position classes, we noticed that the verb-pc_lrt1 had lexical rule instances of “-ən” and “-tu”. There is nothing in the descriptive grammar or patterns in the test corpus to suggest these two were related. We deleted the instance of “-ən”. However, looking at the “-tu” in the test corpus, we realize that it is a pluperfect suffix that can be added to verbs. We added “plpf” as a tense and then added “plpf” as a feature whilst renaming the lexical rule type to PLPF_Verb_Suffix.
+
+3.5 We deleted the instance of “-a” from the verb-pc17_lrt3 since there was no pattern of it being a suffix of verbs but of demonstratives instead.
+
+3.6 We also noticed in the grammar that “-iʃt” attaches to a noun, making the noun nominative plural. In the grammar, “-iʃt” appeared as an instance of a verb lexical rule type. We deleted that type and made it a noun lexical rule type noun-pc3_lrt2 with the features of number being PL and case being NOM. 
+
+
+
+
+
+
+
+
