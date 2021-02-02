@@ -1,0 +1,80 @@
+LING 567
+LAB 4
+Connie Chen
+Dongqi Su
+
+
+Question 1:
+1.1 Initial test corpus
+	1. How many items parsed? 155 / 683
+	2. What is the average number of parses per parsed item?6.65
+	3. How many parses did the most ambiguous item receive? 136
+	4.What sources of ambiguity can you identify?
+		“=ət” is a conjunction as well as an subject-marking enclitic. This is a reflection of the language since the descriptive grammar describes “=ət” as both a 2SG subject-marking enclitic as well as a coordination conjunction. Currently, there is no instance of “=ət” as a conjoining coordination in the choices file.  
+
+1.2 Initial testsuite
+	1. How many items parsed? 22
+
+	2. What is the average number of parses per parsed item? 3.59
+	3. How many parses did the most ambiguous item receive? 23
+	4.What sources of ambiguity can you identify? 
+		In our testsuite, we test the phenomenon of the lexical item “ki” which appears at the beginning of a clause to mark what follows as an embedded complement clause. In the parses with “ki”, we see that it only has one node above it which is the KI node. Looking at the simple mrs, there is no predication for it. This seems ambiguous seeing as it perhaps should have some rule above this node indicating what licenses it.
+
+Question 2:
+2.1 The first phenomenon is the conditional clause, a type of adverbial clause modifier in Wakhi. The conditional clause is marked by the enclitic “=ki”. It is attached to a word in the conditional clause. The descriptive grammar does not make clear which word of the conditional clause the enclitic attaches to, but the test corpus suggests that it attaches to pronouns and the adverb “now”. It is possible that the conditional enclitic attaches to the end of the first word in the conditional clause. In example 44 of the testsuite,
+	wuz=əp nɨmendʒ-əm j-a-w=ʂ=ki dʒoj-t
+	1SG.NOM=FUT dance-1SG.NPST DEM-MED-PRO=PROG=COND read-3SG.NPST
+	'I will dance if he reads.'
+“=ki” is attached to the end of the pronoun of the conditional clause “if he reads”. 
+However, in example 46,
+	wuz=əp nɨmendʒ-əm=ki j-a-w=ʂ dʒoj-t
+	1SG.NOM=FUT dance-1SG.NPST=COND DEM-MED-PRO=PROG read-3SG.NPST
+	'I will dance if he reads.'
+“=ki” is attached to the end of the verb of the main clause “I will dance”, making the sentence ungrammatical. 
+
+
+2.2 The second phenomenon is the embedded complement clause that is marked by the subordinator “ki”. The complement clause begins with the word “ki” and is then followed by the rest of the complement clause. There is no special morphology required on the main verb. The word order of embedded clauses is the same SOV order as the matrix clauses. In example 51,
+	wuz çan-t ki maʐ rɨçɨp-i.
+	1SG.NOM say-PST COMP 1SG.OBL sleep-PST
+	‘I said that I slept.’
+"ki” begins the embedded complement clause and is followed by the subject and then the verb of the rest of the complement clause. However, in example 54,
+	wuz çan-t ki dʒoj-i maʐ.
+	1SG.NOM say-PST COMP read-PST 1SG.OBL.
+	‘I said that I read’
+‘ki’ is followed by the verb and then subject of the complement clause, making it ungrammatical. 
+
+
+2.3 The third phenomenon is about the Wh- questions in Wakhi. The descriptive grammar does not have anything to say on this. However, looking at the test corpus, there is a pattern occurring where the wh-word appears after the subject and object but before the verb phrase in a sentence. Sometimes the verb is optional in questions. This is not a conclusive observation, but it is a pattern we notice with regards to occurrences of Wh- questions in the test corpus. In example 57,
+	j-a-w=i ʧiz-r gəfs-tk?
+	DEM-MED-PRO=3SG what-DAT run-PRF?
+	Why is s/he running?
+‘what’ appears after the subject and before the verb. In example 59,
+	ʧiz-r j-a-w=i gəfs-tk?
+	what-DAT DEM-MED-PRO=3SG run-PRF?
+	Why is s/he running?
+‘what’ appears before the subject and the verb of the sentence, making it ungrammatical. 
+
+
+Testing out ace:
+
+#2410
+john-i maʐ win-t
+NO_GLOSS-OBL 1SG.OBL see -PST 
+‘John saw me.’
+
+This sentence generated 44 sentences before we received the message “NOTE: hit RAM limit while unpacking”. We noticed that a lot of the sentences have a conjunction appearing right after “john-i maʐ”. This is because when we parse the sentence and look at the simple mrs, there is a coordination predication in the RELS list. This doesn’t seem to be the correct semantic parsing considering that the gloss doesn’t show a conjunction coordination. We are not sure how exactly we can go about addressing this in the choices file. 
+
+
+#3170
+wuz=əm retʂ-tu
+1SG.NOM==1SG go-PLPF
+I left.
+This sentence generated 15,318 results while also noting that it “hit RAM limit while unpacking”. The difference between this sentence and the one in the example below is that this sentence has a pronoun whereas the other does not. It seems like there is a lot of ambiguity with regards to “wuz” and “=əm”. 
+
+#3930
+retʂ-tu=əm
+go -PLPF ==1SG
+I left.
+
+This sentence generated 45 results. What caught our attention was the fact that there are sentences generated where “=-” occurs. An enclitic should only be followed by letters of the language and not a hyphen. We are not sure how that is happening. 
+
