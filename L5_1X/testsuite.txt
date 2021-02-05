@@ -1,0 +1,207 @@
+Language: Wakhi
+Language code: wbl1
+Lines: orth orth-seg gloss translat
+Author: Connie Chen, Dongqi Su
+Date: January 19, 2021
+Source a: "From Oral to Written: A Text-linguistic Study of Wakhi Narratives" by Jaroslava Obrtelova
+Source b: "Differential Subject Marking in Wakhi" by Erin Christine SanGregory
+
+#Ex 1 - parsed
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+tu=ət puv-i
+tu=ət puv-i
+2SG.NOM=2SG drink-PST
+'You drank'
+
+#Ex 2 - parsed
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+tu=ət rəd-i
+tu=ət rəd-i
+2SG.NOM=2SG run-PST
+'You ran'
+
+#Ex 3 - parsed
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+wuz=əm rɨçɨp-i
+wuz=əm rɨçɨp-i
+1SG.NOM=1SG sleep-PST
+'I slept'
+
+#Ex 4 - parsed
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+wuz rondoj-əm
+wuz rondoj-əm
+1SG.NOM jump-1SG.NPST
+'I am jumping'
+
+#Ex 5 - parsed
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+wuz pats-əm
+wuz pats-əm
+1SG.NOM cook-1SG.NPST
+'I am cooking'
+
+#Ex 6 - it parsed
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+tu=ət puv-∅
+tu=ət puv-∅
+2SG.NOM=2SG drink-2SG.NPST
+'You are drinking'
+
+#Ex 7 - it parsed
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+tu=ət rəd-∅
+tu=ət rəd-∅
+2SG.NOM=2SG run-2SG.NPST
+'You are running'
+
+#Ex 8 - it parsed
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+wuz=əm rɨçɨp-əm
+wuz=əm rɨçɨp-əm
+1SG.NOM=1SG sleep-1SG.NPST
+'I am sleeping'
+
+#Ex 9 - it parsed
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+wuz=əm rondoj-əm
+wuz=əm rondoj-əm
+1SG.NOM=1SG jump-1SG.NPST
+'I am jumping'
+
+#Ex 10 - it parsed
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+wuz=əm pats-əm
+wuz=əm pats-əm
+1SG.NOM=1SG cook-1SG.NPST
+'I am cooking'
+
+#Ex 11
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Coordination
+tu=ət puv-i=ət rəd-i
+tu=ət puv-i=ət rəd-i
+2SG.NOM=2SG drink-PST=and run-PST
+'You drank and ran'
+
+#Ex 12
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Coordination
+wuz=əm rondoj-i=ət rondoj-i
+wuz=əm rondoj-i=ət rondoj-i
+1SG.NOM=1SG jump-PST=and jump-PST 
+'I jumped and jumped'
+
+#Ex 13
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Coordination
+wuz=əm jaw-i mɨr=əv=ət xɨg=əv
+wuz=əm jaw-i mɨr=əv=ət xɨg=əv
+1SG.NOM=1SG eat-PST apple=3PL=and pig=3PL
+'I ate apples and pigs'
+
+#Ex 14
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Coordination
+tu=ət puv=ət-i rəd-i
+tu=ət puv=ət-i rəd-i
+2SG.NOM=2SG drink=and-PST run-PST
+'You drank and ran'
+
+#Ex 15 not sure if grammatical or ungrammatical
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Coordination
+tu=ət=ət wuz=əm
+tu=ət=ət wuz=əm
+2SG.NOM=2SG=and 1SG.NOM=1SG
+'You and I'
+
+#Ex 16 - Determiners
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Determiners
+j-a-w j-a kitob dʒoj-i
+j-a-w j-a kitob dʒoj-i
+DEM-MED-PRO DEM-MED book read-PST
+'He read that book'
+
+#Ex 17 - Determiners
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Determiners
+j-a-w a-j kitob dʒoj-i
+j-a-w a-j kitob dʒoj-i
+DEM-MED-PRO MED-DEM book read-PST
+'He read that book'
+
+#Ex 18 - Determiners
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Determiners
+j-a-w j-a kitob j-a-w-r rand-i
+j-a-w j-a kitob j-a-w-r rand-i
+DEM-MED-PRO DEM-MED book DEM-MED-PRO-DAT give-PST
+'He gave that book to him'
+
+#Ex 19 - Determiners
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Determiners
+wuz=əm j-a kitob j-a-w-r rand-i
+wuz=əm j-a kitob j-a-w-r rand-i
+1SG.NOM=1SG DEM-MED book DEM-MED-PRO-DAT give-PST
+'I gave that book to him'
+
+#Ex 20 
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Determiners
+wuz=əm a-j kitob dʒoj-i
+wuz=əm a-j kitob dʒoj-i
+1SG.NOM=1SG MED-DEM book read-PST
+'I read that book'
