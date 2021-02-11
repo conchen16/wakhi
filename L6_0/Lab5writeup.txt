@@ -1,0 +1,346 @@
+LAB 5
+Connie Chen
+Dongqi Su
+Wakhi-wbl
+
+(NOTE: In tsdb/home the test corpus and testsuite with the initial grammar are titled corpus_initial and lab5_initial, respectively)
+
+*****QUESTION 1: Phenomena*****
+The changes we made in the choices file consists of general cleaning up of the lexicon and the case phenomenon in Wakhi. We also attempted to move the second position subject-marking-for-agreement clitics from the morphology section of the choices file to be auxiliaries. After doing this, we changed the word order from SOV to V2 and also deleted a few spurious lrts. While trying to run the tsdb to check the coverage of our changes, the tsdb would only process 52/683 items before getting stuck on the 53rd item. Since we had already spent a lot of time on the choices file prior to trying this, we decided to tackle this again next week.
+ 
+We decided to clean up the lexicon because we noticed that there were verb types that were either incorrectly identified as verbs or they could be grouped together with other verbs types. We thought this might affect the input of position classes in the morphology. Here are steps of the changes we made and the change in the choices file:
+
+
+In the lexicon, we deleted verb type 16 “ʃaj” meaning “kill”  and added it as a stem to the existing verb type 8 because it had the same constraints as verb type 8 which states that the subject of the verb will be nominative and the object of the verb will be accusative.
+
+verb8_name=Trans_and_Intrans_Verbs
+    verb8_feat1_name=case
+    verb8_feat1_value=nom
+    verb8_feat1_head=subj
+    verb8_feat2_name=case
+    verb8_feat2_value=accl
+    verb8_feat2_head=obj
+	...
+    verb8_stem66_orth=ʃaj
+    verb8_stem66_pred=_kill_v_rel
+
+Based on Lab 4 feedback, we deleted the name “john” as verb type 12 and added “john” as the new noun type 36. 
+
+ noun36_name=Names
+  noun36_det=imp
+    noun36_stem1_orth=john
+    noun36_stem1_pred=_NO_GLOSS_n_rel
+
+#sample IGT
+john maʐ win-t
+NO_GLOSS 1SG.OBL see -3SG.NPST
+‘John sees me.’
+
+We deleted verb type 63 that stated “çat” as a verb stem when it is actually a reflexive pronoun. We added “çat” as a noun type 37.
+
+  noun37_name=Reflexive
+  noun37_pron=on
+  noun37_det=imp
+    noun37_stem1_orth=çat
+    noun37_stem1_pred=_refl_n_rel
+
+We deleted verb type 17 that stated “məjmon” as a verb stem when it is actually the noun “guest”. We added “məjmon” to the existing noun type 16 which has the feature of 3rd person. 
+
+ noun16_name=Common_Nouns
+    noun16_feat1_name=person
+    noun16_feat1_value=3rd
+    …
+noun16_stem92_orth=məjmon
+noun16_stem92_pred=_guest_n_rel
+We deleted the verb type 45 that stated that “to” was a verb stem when it is actually a 2SG oblique pronoun. We added it “to” as the new noun type 38. 
+
+  noun38_name=2SG_obl_noun
+  noun38_pron=on
+    noun38_feat1_name=case
+    noun38_feat1_value=obl
+    noun38_feat2_name=number
+    noun38_feat2_value=sg
+    noun38_feat3_name=person
+    noun38_feat3_value=2nd
+  noun38_det=imp
+    noun38_stem1_orth=to
+    noun38_stem1_pred=_pron_n_rel
+
+We deleted a spurious instance of “=əp” from noun-pc5-lrt1 since it did not have anything in common with the other instance in the lrt. We created a new position class called noun-pc25 to specify that the input of this position class is nominative pronouns. It also seems to occur on demonstrative pronouns, but we decided to only deal with the nominative ones because the demonstrative pronouns occur in different ways in the lexicon that we are still unsure of. We add the noun-pc25-lrt1 with the instance “=əp” and the feature of future tense. 
+
+ noun-pc25_name=Noun_FUT_Suffix
+  noun-pc25_order=suffix
+  noun-pc25_inputs=noun27, noun29, noun32, noun33, noun36
+    noun-pc25_lrt1_name=Noun_FUT_Suffix_lrt
+      noun-pc25_lrt1_feat1_name=tense
+      noun-pc25_lrt1_feat1_value=fut
+      noun-pc25_lrt1_feat1_head=itself
+      noun-pc25_lrt1_lri1_inflecting=yes
+      noun-pc25_lrt1_lri1_orth==əp
+
+#sample IGT where it seems like it won’t parse because =əp cannot be attached to John even #though we specified John as an input to =əp
+John=əp puv-t
+John=FUT drink-3SG.NPST
+‘John will drink’
+
+The case phenomenon we focused on this week required a lot of changes. According to our descriptive material, Wakhi has a nominative and oblique case. There is a different form in nominative and oblique cases for each of the personal pronouns. Only the personal pronouns for 3SG and 1PL are the same in nominative as they are in the oblique case. Additionally, the subjects of intransitive and transitive verbs have nominative case in both the past and nonpast tense. Only a sentence with a past transitive verb has the oblique case specified on both of the verb’s arguments. 
+
+#Ex 62 L5
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Case
+wuz to win-əm
+wuz to win-əm
+1SG.NOM 2SG.OBL see-1SG.NPST
+'I see you.'
+
+#Ex 63 L5
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Case
+wuz tu win-əm
+wuz tu win-əm
+1SG.NOM 2SG.NOM see-1SG.NPST
+'I see you.'
+
+#Ex 65 L5
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Case
+maʐ to win-t
+maʐ to win-t
+1SG.OBL 2SG.OBL see-PST
+'I saw you.'
+
+In order to address this, we first decided to clean up spurious occurrences of oblique pronouns in the lexicon. 
+We deleted “maʐ” as an aux type 6 that stated it was of form finite and mood oblig when it is actually the 1SG oblique pronoun.
+
+  aux6_name=aux6
+  aux6_sem=no-pred
+    aux6_feat1_name=mood
+    aux6_feat1_value=oblig
+    aux6_feat1_head=verb
+  aux6_subj=np-comp-case
+    aux6_compfeature1_name=form
+    aux6_compfeature1_value=finite
+    aux6_stem1_orth=maʐ
+
+We deleted “to” as an aux type 2 that stated it was of form finite and mood oblig when it is actually a 2SG oblique pronoun.
+
+  aux2_name=aux2
+  aux2_sem=add-pred
+    aux2_feat1_name=mood
+    aux2_feat1_value=oblig
+    aux2_feat1_head=verb
+  aux2_subj=np
+    aux2_compfeature1_name=form
+    aux2_compfeature1_value=finite
+    aux2_stem1_orth=to
+    aux2_stem1_pred=_2sg.obl_v_rel
+
+We deleted “taw” as an aux type 7 that stated it was of form finite and mood oblig when it is actually another 2SG oblique pronoun.
+
+  aux7_name=aux7
+  aux7_sem=no-pred
+    aux7_feat1_name=mood
+    aux7_feat1_value=oblig
+    aux7_feat1_head=verb
+  aux7_subj=np-comp-case
+    aux7_compfeature1_name=form
+    aux7_compfeature1_value=finite
+    aux7_stem1_orth=taw
+
+
+We deleted “sav” as an aux type 8 that stated it was of form finite and mood oblig when it is actually the 2PL oblique pronoun.
+
+  aux8_name=aux8
+  aux8_sem=no-pred
+    aux8_feat1_name=mood
+    aux8_feat1_value=oblig
+    aux8_feat1_head=verb
+  aux8_subj=np-comp-case
+    aux8_compfeature1_name=form
+    aux8_compfeature1_value=finite
+    aux8_stem1_orth=sav
+
+Deleting these spurious aux types caused errors in the morphology where position classes took these aux types as input. It caused an error in verb-pc27 (input: aux2), verb-pc28 (input: aux6), verb-pc29 (input: aux7), and verb-pc30 (input: aux8). Each of these position classes had one lrt with 2 features. It was the person and number features corresponding to the input of the position class. For example, verb-pc27 took aux2 as input. Originally, aux2 was “to” which is actually a 2SG.OBL pronoun. Therefore, verb-pc27-lrt1 had the features 2SG. The same applies for the lrt in the other 3 position classes. The system also did not specify any affix for these lrts, so we deleted the 4 verb position classes. 
+
+  verb-pc27_name=verb-pc27
+  verb-pc27_obligatory=on
+  verb-pc27_order=prefix
+  verb-pc27_inputs=aux2
+    verb-pc27_lrt1_name=verb-pc27_lrt1
+      verb-pc27_lrt1_feat1_name=person
+      verb-pc27_lrt1_feat1_value=2nd
+      verb-pc27_lrt1_feat1_head=subj
+      verb-pc27_lrt1_feat2_name=number
+      verb-pc27_lrt1_feat2_value=sg
+      verb-pc27_lrt1_feat2_head=subj
+      verb-pc27_lrt1_lri1_inflecting=no
+  verb-pc28_name=verb-pc28
+  verb-pc28_obligatory=on
+  verb-pc28_order=prefix
+  verb-pc28_inputs=aux6
+    verb-pc28_lrt1_name=verb-pc28_lrt1
+      verb-pc28_lrt1_feat1_name=person
+      verb-pc28_lrt1_feat1_value=1st
+      verb-pc28_lrt1_feat1_head=subj
+      verb-pc28_lrt1_feat2_name=number
+      verb-pc28_lrt1_feat2_value=sg
+      verb-pc28_lrt1_feat2_head=subj
+      verb-pc28_lrt1_lri1_inflecting=no
+  verb-pc29_name=verb-pc29
+  verb-pc29_obligatory=on
+  verb-pc29_order=prefix
+  verb-pc29_inputs=aux7
+    verb-pc29_lrt1_name=verb-pc29_lrt1
+      verb-pc29_lrt1_feat1_name=person
+      verb-pc29_lrt1_feat1_value=2nd
+      verb-pc29_lrt1_feat1_head=subj
+      verb-pc29_lrt1_feat2_name=number
+      verb-pc29_lrt1_feat2_value=sg
+      verb-pc29_lrt1_feat2_head=subj
+      verb-pc29_lrt1_lri1_inflecting=no
+  verb-pc30_name=verb-pc30
+  verb-pc30_obligatory=on
+  verb-pc30_order=prefix
+  verb-pc30_inputs=aux8
+    verb-pc30_lrt1_name=verb-pc30_lrt1
+      verb-pc30_lrt1_feat1_name=person
+      verb-pc30_lrt1_feat1_value=2nd
+      verb-pc30_lrt1_feat1_head=subj
+      verb-pc30_lrt1_feat2_name=number
+      verb-pc30_lrt1_feat2_value=pl
+      verb-pc30_lrt1_feat2_head=subj
+      verb-pc30_lrt1_lri1_inflecting=no
+
+The system had recognized “maʐ”, “taw”, “to”, and “sav” as pronouns and added them as noun types so we did not have to add them in.
+
+In order to address the phenomenon that the primary cases used in Wakhi are nominative and oblique, we turned our attention to our verb type 8 which had the most stems. Verb 8 consists of transitive and intransitive verb stems. It had features saying that the subject of the verb would be nominative and the object of the verb would be accusative. Since accusative is not a primary case of Wakhi but instead oblique we decided to change the feature of this large verb type.
+We were conflicted between whether or not to delete the accusative feature and have the only feature be that subjects of the verb were nominative. Afraid that it would create too much ambiguity, we decided to specify that the object of the verb is case oblique instead of accusative. 
+
+  verb8_name=Trans_and_Intrans_Verbs
+    verb8_feat1_name=case
+    verb8_feat1_value=nom
+    verb8_feat1_head=subj
+    verb8_feat2_name=case
+    verb8_feat2_value=obl
+    verb8_feat2_head=obj
+
+*****QUESTION 2: MMT*****
+Since there were some words in the eng.txt that didn’t exist in the Wakhi corpus, I swapped “chase” for “hit, “park” for “store”, and “hungry” for “sad”. Then I translated the sentence by searching for the correct stem in the item file and then adding additional information to the stems based on the descriptive material.  
+
+	ʃatʃ-iʃt kar-v di-ən
+	dog-PL.NOM car-OBL.PL hit-3PL.NPST
+	'Dogs hit cars.'
+
+For example, I knew the SOV ordering makes the sentence look like “Dogs cars hit”. I take the root word “dog” and searched the grammar for a plural inflection which also happened to be the nominative inflection. I did the same with “car” but searched for an oblique case version of the plural inflection after deducing there must be one if there was a plural inflection carrying nominative case information. (Yes, the glosses in the item file are PL.NOM and OBL.PL, not PL.OBL in case you thought it was a typo!) I took the stem for the verb “hit” and added the correct subject agreement suffix in the non-past tense since Wakhi does not have a present tense.
+
+“Who asked that the dogs hit” and “I asked that the dogs hit” could not be translated to Wakhi because there’s no information in the descriptive grammar or any instance in the test corpus of embedded interrogative clauses. 
+We could not translate “The dogs sleep because the cat sleeps” because we had no equivalent for “because” besides the conjunction “and” which isn’t similar enough to be a replacement. 
+We do not think the sentences “Who sleeps”, “What do the dogs hit”, and “What do you think the dogs hit” with Wh- questions will translate because we have not yet addressed this phenomenon in the choices file. 
+ 
+*****QUESTION 3: MT *****
+There were no difficulties running the MT. The first sentence “Dogs sleep” generated about 48k sentences which is related to the fact that there are spurious occurrences of clitics in our grammar.  For example one of the generated sentences was 
+	ʃatʃ rɨçɨp-t-tk=i
+	Dog sleep-PST-PRF=3SG
+Which shows the incorrect tense and agreement information. A more accurate generation should look something like the following:
+	ʃatʃ-iʃt rɨçɨp-ən
+	dog-PL.NOM sleep-3SG.NPST
+
+*****QUESTION 4*****
+
+4.1 Initial test corpus
+1. How many items parsed? 155 / 683
+2. What is the average number of parses per parsed item?6.65
+3. How many parses did the most ambiguous item receive? 136
+
+4.2 Final test corpus
+1. How many items parsed? 158 / 683
+2. What is the average number of parses per parsed item? 7.22
+3. How many parses did the most ambiguous item receive? 136
+4.What sources of ambiguity can you identify? 
+	zilzila=ʂ wəz-t
+	earthquake =PROG come -3SG.NPST 
+	‘There was an earthquake.’
+This shows that “-t” can be licensed by 2 lrts. One has the features 3SG.NPST and the other has the feature -PST. This seems to cause ambiguity often because these tenses are used often.
+
+4.3 Initial testsuite
+1. How many items parsed? 25
+2. What is the average number of parses per parsed item? 3.4
+3. How many parses did the most ambiguous item receive? 23
+
+4.4 Final testsuite
+1. How many items parsed? 26
+2. What is the average number of parses per parsed item? 6.5
+3. How many parses did the most ambiguous item receive? 23
+4.What sources of ambiguity can you identify? 
+	ʃatʃ-iʃt kar-v di-ən
+	dog-PL.NOM car-OBL.PL hit-3PL.NPST
+	'Dogs hit cars.'
+This shows that “hit” is licensed by both the 3PL.NPST lrt and 1PL.NPST lrt. This is an unavoidable ambiguity since the descriptive grammar states that there are no distinctions between the two. 
+
+SEMANTICS:
+#480
+wuz=əm plan-t-i
+1SG.NOM ==1SG fall -PST -PST
+I fell.
+The semantics looks reasonable. There are predictions “exist_q_rel”, “_pron_n_rel”, and “_fall_v_rel”. “exist_q_rel” modifies “_pron_n_rel”, and “_fall_v_rel” take “_pron_n_rel” as the second argument. This is the same semantics as the previous grammar.
+
+#290
+maʐ taw win-tu
+1SG.OBL 2SG.OBL see -PLPF 
+I saw you.
+The semantics doesn’t seem to match up with the IGT. There is a _and_coord_rel predication that does not exist in the IGT. The ARG0 in the verb predication _see_v_rel is identified with the INDEX of the sentence. This is the same semantics as the previous grammar.
+
+#1850
+zəm di-tu
+snow hit -PLPF 
+It snowed.
+The semantics looks reasonable. The predications describing snow are exist_q_rel and _snow_n_rel where ARG0 of _snow_n_rel is identified with the ARG0 of the exist_q_rel that comes from the constituent being an NP. The verb has the _hit_v_rel predication where it’s ARG2 is identified with the ARG0 of both exist_q_rel and _snow_n_rel. The ARG0 of _hit_v_rel is identified with the INDEX of the sentence. This is the same semantics as the previous grammar.
+
+#2140
+sajiʃt=əv=ʂ gəfs-t-i
+2PL.NOM ==2PL =PROG run -PST -PST
+You (pl.) were running.
+The semantics looks reasonable. There is a predication for sajiʃt=əv=ʂ that has _pron_n_rel since it is a pronoun as well as an exist_q_rel predication that is a result of the constituent being an NP. The verb gəfs-t-i also has the reasonable predication of _run_v_rel which takes the pronoun as its ARG1. The ARG0 of value of the verb is identified with the INDEX of the sentence. This is the same semantics as the previous grammar.
+
+#750
+j-a-w gəfs-t
+DEM -MED PRO run -3SG.NPST
+(S)he will run.
+The semantics looks reasonable. There are predictions for both “j-a-w” and “gəfs-t”. “j-a-w” has the predications “_exist_q_rel” and “_pron_n_rel”. “Gəfs-t” has the predication “_run_v_rel” which take “_exist_q_rel” and “_pron_n_rel” as argument. The index of the mrs comes from “_run_v_rel”.
+
+#2490
+j-a-w-i çat win-tu
+DEM -MED PRO -OBL REFL see -PLPF 
+S/he saw herself/himself.
+The semantics does not match up with the IGT. The _and_coord_rel does not belong because there is no coordination occurring in the sentence according to the IGT. Additionally the exist_q_rel predication with ARG0 identified with the C-ARG of the coordination predication. The _see_v_rel has an ARG2 value identified with the C-ARG of the coordination predication and the irrelevant exist_q_rel predication. This is the same semantics as the previous grammar.
+
+#3950
+wuz=ʂ dam xaʂ-əm
+1SG.NOM =PROG breath pull -1SG.NPST
+I breathe.
+The semantics looks reasonable. There is a predication for “wuz=ʂ” that has _pron_n_rel since it’s a pronoun as well as an exist_q_rel predication that modify the pronoun. “dam” also has a similar pair of predications (_pron_n_rel and exist_q_rel). Finally, “xaʂ-əm” has a “_pull_v_rel” predication which take both “wuz=ʂ” and  “dam” as argument.
+
+#3170
+wuz=əm retʂ-tu
+1SG.NOM ==1SG go -PLPF 
+I left.
+The semantics looks reasonable. There is a predication for wuz=əm that has _pron_n_rel since it is a pronoun as well as an exist_q_rel predication that is a result of the constituent being an NP. The verb retʂ-tu also has the reasonable predication of _go_v_rel which takes the pronoun as its ARG1. The ARG0 of value of the verb is identified with the INDEX of the sentence. This is the same semantics as the previous grammar.
+
+#3930
+retʂ-tu=əm
+go -PLPF ==1SG
+I left.
+The semantics looks reasonable.The only predication we have is _go_v_rel. The pronoun is encoded in ARG1 as 1SG. This is the same semantics as the previous grammar.
+
+#3960
+maʐ zumbuj-t
+1SG.OBL yawn -PST
+I just yawned.
+The semantics looks reasonable. There are predictions for both “maʐ” and “zumbuj-t”. “maʐ” has the predications “_exist_q_rel” and “_pron_n_rel”. “zumbuj-t” has the predication “_yawn_v_rel” which take “_exist_q_rel” and “_pron_n_rel” as argument. The index of the mrs comes from “_yawn_v_rel”.
+

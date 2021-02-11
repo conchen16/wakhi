@@ -1,0 +1,74 @@
+;;; -*- Mode: TDL; Coding: utf-8 -*-
+; A basic VPM for Matrix grammars.
+event          <> e
+ref-ind        <> x
+individual     <> i
+handle         <> h
+non_event      <> p
+*              >> u
+semarg         << u
+
+SPECI : SPECI
+  * <> *
+
+SF : SF
+  prop <> prop
+  ques <> ques
+  prop-or-ques >> prop-or-ques
+  prop << prop-or-ques
+  comm <> comm
+  * <> *
+
+COG-ST : COG-ST
+  type-id <> type-id
+  uniq-id <> uniq-id
+  familiar <> familiar
+  activated <> activated
+  in-foc <> in-foc
+  activ+fam <> activ+fam
+  uniq+fam <> uniq+fam
+  activ-or-more <> activ-or-more
+  uniq-or-less <> uniq-or-less
+  uniq+fam+act <> uniq+fam+act
+  fam-or-more <> fam-or-more
+  fam-or-less <> fam-or-less
+  uniq-or-more <> uniq-or-more
+  activ-or-less <> activ-or-less
+  * <> *
+
+PNG.PN : PER NUM
+  1sg <> 1st sg
+  1pl <> 1st pl
+  1per <> 1st !
+  1per << 1st *
+  2sg  <> 2nd sg
+  2pl  <> 2nd pl
+  2per <> 2nd !
+  2per << 2nd *
+  3sg  <> 3rd sg
+  3pl  <> 3rd pl
+  3per <> 3rd !
+  3per << 3rd *
+  *    >> ! !
+  !    << * *  
+
+PNG.GEND : GEND
+  * <> *
+
+E.TENSE : TENSE
+  npst <> npst
+  present <> npst
+  fut <> fut
+  pst <> pst
+  plpf <> plpf
+  * <> *
+
+E.ASPECT : ASPECT
+  cmpl <> cmpl
+  pfv <> pfv
+  * >> no-aspect
+  no-aspect << [e]
+
+E.MOOD : MOOD
+  oblig <> oblig
+  * <> *
