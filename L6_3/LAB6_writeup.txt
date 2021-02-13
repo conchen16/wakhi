@@ -1,0 +1,381 @@
+Wakhi
+LAB 6
+Connie Chen
+Dongqi Su
+
+
+Notes: 
+- We have a problem using ace. We receive a core dump error that seems to trace back to generating the sentence since parsing and transferring seem to work fine. Our wbl.txt is included to help debug this.
+- We had to remove sentences from the item file in order for the tsdb to run more quickly when processing the items. We have added these sentences to a file removed_items.txt. It takes about 1-2 minutes for the tsdb process all items. 
+
+ **********QUESTION 1 **********
+We added the same PER NUM mapping as the English example because it seems to reflect what is seen in Wakhi. 
+
+We also added 
+  * >> no-aspect
+  no-aspect << [e]
+In aspect because the default in Wakhi is having no aspect specified. We reflected this change in wbl.tdl by adding 
+no-aspect := aspect.
+in aspect because we received the error when generating a parse “problem in create-liszt-fs-from-rels”.
+
+When trying to run ace, we received the error in the terminal “atomic_dg: present not found. We concluded that the the Wakhi equivalent of present tense in English would be the Wakhi nonpast tense which we see supported by the descriptive grammar and test corpus. Therefore, we added to the tense section of the semi.vpm
+Present <> npst
+To reflect this change in wbl.tdl we added 
+Present := tense.
+To the tense section.
+
+These changes reduced our generations of 48,247 results for “Dogs sleep” to 1,416 results.
+
+ **********QUESTION 2 **********
+We started with morphology clean up before tackling the adnominal possession phenomenon. We removed the morphological items =ki, -w, and -a.
+
+There were two lexical rules with spurious instances of =ki. The first was a noun lrt where =ki appears at a suffix with no constraints. Our descriptive grammar describes this as an indicator of a conditional clause. We have not implemented this as a phenomenon. 
+
+wuz=əp nəwiʃ-əm j-a-w=ʂ=ki dʒoj-t
+1SG.NOM=FUT write-1SG.NPST DEM-MED-PRO=PROG=COND read-3SG.NPST  
+I will write if he reads.
+
+We deleted these from irules.tdl:
+
+noun-pc2_lrt3-suffix :=
+%suffix (* =ki)
+noun-pc2_lrt3-lex-rule.
+
+noun-pc16_lrt1-suffix :=
+%suffix (* =ki)
+noun-pc16_lrt1-lex-rule.
+
+We also removed -w where it was an instance of a noun lrt that appears as a suffix with no constraints. Our descriptive grammar does not address this suffix. It has the gloss PRO and the translation “s/he”, showing that it’s a gender neutral pronoun. 
+
+j-a-w j-a xobar kʂɨj-tk
+DEM-MED-PRO DEM-MED news hear-PRF
+S/he heard the news.
+We removed -w from irules.tdl
+noun-pc3_lrt3-suffix :=
+%suffix (* -w)
+noun-pc3_lrt3-lex-rule.
+
+We also removed -a where it was an instance of a noun lrt that appears as a suffix with no constraints. Our descriptive grammar does not address this suffix but it always appears after the demonstrative “j”. Removing “-w” and “-a” will improve the generation since the words “j-a” and “j-a-w” are in the lexicon as determiners with the predicates _exist_q_rel.
+j-a kitob
+DEM-MED book
+The book
+
+
+We removed -a from irules .tdl.
+noun-pc10_lrt1-suffix :=
+%suffix (* -a)
+noun-pc10_lrt1-lex-rule.
+
+While examining how the grammar licenses determiners, we noticed that quite a few pronouns were specified as determiners and not nouns in the lexicon. We deleted all these incorrect instances:
+j-a-w := det2-determiner-lex &
+  [ STEM < "j-a-w" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_exist_q_rel" ].
+
+j-a-v := det9-determiner-lex &
+  [ STEM < "j-a-v" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_exist_q_rel" ].
+
+jaw-i := det8-determiner-lex &
+  [ STEM < "jaw-i" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_exist_q_rel" ].
+
+j-a-w-r := det3-determiner-lex &
+  [ STEM < "j-a-w-r" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_exist_q_rel" ].
+
+j-a-w___3Dʂ := det5-determiner-lex &
+  [ STEM < "j-a-w=ʂ" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_exist_q_rel" ].
+
+j-a-w-i := det7-determiner-lex &
+  [ STEM < "j-a-w-i" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_exist_q_rel" ].
+
+We added 3 of these as nouns with a pronoun predication.
+
+j-a-w := noun1-noun-lex &
+  [ STEM < "j-a-w" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_pron_q_rel" ].
+
+j-a-v := noun2-noun-lex &
+  [ STEM < "j-a-v" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_pron_q_rel" ].
+
+jaw-i := noun3-noun-lex &
+  [ STEM < "jaw-i" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_pron_q_rel" ].
+
+Then we reflected these changes in wbl.tdl by adding
+noun1-noun-lex := noun-lex &
+  [ SYNSEM.LOCAL [ CONT.HOOK.INDEX.PNG [ PER 3rd,
+                                         NUM sg ] ] ].
+
+noun2-noun-lex := noun-lex &
+  [ SYNSEM.LOCAL [ CONT.HOOK.INDEX.PNG [ PER 3rd,
+                                         NUM pl ],
+                   CAT.HEAD [ PRON +,
+                              CASE obl ] ] ].
+
+noun3-noun-lex := noun-lex &
+  [ SYNSEM.LOCAL [ CONT.HOOK.INDEX.PNG [ PER 3rd,
+                                         NUM sg ],
+                   CAT.HEAD [ PRON +,
+                              CASE obl ] ] ].
+
+Next, we decided to handle the phenomenon of second position clitics. In irules.tdl, we removed all the clitics we saw as well as spurious clitic appearances. These are the ones we removed:
+
+1SG_NOM_Enclitic-suffix :=
+%suffix (* =əm)
+1SG_NOM_Enclitic-lex-rule.
+
+2SG_NOM_Enclitic-suffix :=
+%suffix (* =ət)
+2SG_NOM_Enclitic-lex-rule.
+
+1PL_NOM_Enclitic-suffix :=
+%suffix (* =ən)
+1PL_NOM_Enclitic-lex-rule.
+
+2PL_NOM_Enclitic-suffix :=
+%suffix (* =əv)
+2PL_NOM_Enclitic-lex-rule.
+
+Noun_FUT_Suffix_lrt-suffix :=
+%suffix (* =əp)
+Noun_FUT_Suffix_lrt-lex-rule.
+
+#=PROG gloss not sure how to handle this
+noun-pc5_lrt1-suffix :=
+%suffix (* =ʂ)
+noun-pc5_lrt1-lex-rule.
+
+#3sg
+3SG_Noun_Affix-suffix :=
+%suffix (* =i)
+3SG_Noun_Affix-lex-rule.
+
+#spurious
+noun-pc13_lrt1-suffix :=
+%suffix (* =əv)
+noun-pc13_lrt1-lex-rule.
+
+#3sg (spurious)
+verb-pc17_lrt2-suffix :=
+%suffix (* =i)
+verb-pc17_lrt2-lex-rule.
+
+#Delete it as an instance from lrt (=QM gloss not sure what that is)
+verb-pc17_lrt3-suffix1 :=
+%suffix (* =a)
+verb-pc17_lrt3-lex-rule.
+
+#Spurious Future tense
+verb-pc17_lrt4-suffix :=
+%suffix (* =əp)
+verb-pc17_lrt4-lex-rule.
+
+#3pl (spurious)
+verb-pc20_lrt1-suffix :=
+%suffix (* =əv)
+verb-pc20_lrt1-lex-rule.
+
+#1sg (spurious)
+verb-pc24_lrt1-suffix :=
+%suffix (* =əm)
+verb-pc24_lrt1-lex-rule.
+
+Then, we added the clitics as auxiliaries in lexicon.tdl. These are auxiliaries added where the = is removed in each in order to properly parse:
+ 
+əm := aux10-aux-lex &
+  [ STEM < "əm" > ].
+ət := aux11-aux-lex &
+  [ STEM < "ət" > ].
+ən := aux12-aux-lex &
+  [ STEM < "ən" > ].
+əv := aux13-aux-lex &
+  [ STEM < "əv" > ].
+əp := aux14-aux-lex &
+  [ STEM < "əp" > ].
+i := aux15-aux-lex &
+  [ STEM < "i" > ].
+Then we added = as a space character to lkb/globals.lsp as shown below.
+
+(defparameter *punctuation-characters*
+  (append
+   '(#\space #\! #\" #\& #\' #\( #\)
+     #\* #\+ #\, #\− #\. #\/ #\\ #\;
+     #\< #\> #\? #\@ #\[ #\] #\^ #\`
+     #\{ #\| #\} #\~ #\=)
+
+None of the sentences that parsed had clitics in them, unfortunately. Here are a few sentences with clitics that parsed with the initial grammar.
+
+#480
+wuz=əm plan-t-i
+1SG.NOM==1SG fall-PST-PST
+I fell.
+
+#3220
+wuz=əm ʃtref-t-i
+1SG.NOM==1SG sneeze-PST-PST
+I sneezed.
+
+At this point our parsing results were that we went from 158 items parsed to 89. Our average number of parses per parsed item went from 7.22 to 6.75.
+Now, we will address our adnominal possession phenomenon. Our descriptive grammar didn’t have anything to say about possessives so the changes we made are based on the patterns we see in our test corpus. There seems to be two ways of showing adnominal possession. The first is by marking the possessor with the oblique case suffix.
+#3580
+Nazir-i ʃatʃ
+Nazir-OBL dog
+Nazir's dog
+
+#3590
+j-a xalg-i ʃatʃ
+DEM-MED person-OBL dog
+the person's dog
+
+The second way is by the item ʐɨ.It appears as a separate word or affix.
+
+#2070
+j-m=i ʐɨ maj .
+DEM-PROX==3SG 1SG.GEN sheep .
+This is my sheep.
+#2920
+j-m=i ʐɨmaj
+DEM-PROX==3SG 1SG.GEN sheep
+This is my sheep.
+
+It also seems like non-1SG adnominal possession is shown with pronouns. There are not enough examples to really implement this confidently. The examples below show the possessor as a regular nominative pronoun, a 2PL pronoun with genitive case, and a pronoun with oblique plural case, respectively.
+
+#2860
+j-a-w kitob
+DEM-MED-PRO book
+His/her/its book
+
+#2870
+sav kitob
+2PL.GEN book
+Your (plural) book
+
+#2880
+j-a-v kitob
+DEM-MED-OBL.PL book
+Their book
+
+We chose to add two of the above ways. We decided to implement the instance of possessor marking with the oblique case suffix as well as the instance of ʐɨ as a separate word showing adnominal possession. We added a class of possessor pronouns to add ʐɨ as a separate word. 
+
+  poss-pron1_type=non-affix
+  poss-pron1_agr=non-agree
+  poss-pron1_mod-spec=spec
+  poss-pron1_order=head-final
+    poss-pron1_instance1_name=1SG_GEN
+    poss-pron1_instance1_orth=ʐɨ
+      poss-pron1_instance1_feat1_name=number
+      poss-pron1_instance1_feat1_value=sg
+      poss-pron1_instance1_feat2_name=person
+      poss-pron1_instance1_feat2_value=1st
+  poss-pron1_possessum-mark=no
+
+To account for the marking of the possessor with the oblique case suffix as adnominal possession, we added a possessive strategy. 
+
+section=adnom-poss
+  poss-strat1_order=head-final
+  poss-strat1_mod-spec=spec
+  poss-strat1_mark-loc=possessor
+  poss-strat1_possessor-type=affix
+  poss-strat1_possessor-affix-agr=non-agree
+
+We also added a new lrt for the morphological items -i and -v which are shown in the test corpus to indicate possession with the oblique case or just a word with the oblique case. Here is the lrts of -i and -v just showing case:
+
+    noun-pc2_lrt1_name=noun-pc2_lrt1
+      noun-pc2_lrt1_feat1_name=case
+      noun-pc2_lrt1_feat1_value=obl
+      noun-pc2_lrt1_feat1_head=itself
+      noun-pc2_lrt1_lri1_inflecting=yes
+      noun-pc2_lrt1_lri1_orth=-i
+
+      noun-pc3_lrt1_feat1_name=case
+      noun-pc3_lrt1_feat1_value=obl
+      noun-pc3_lrt1_feat1_head=itself
+      noun-pc3_lrt1_feat2_name=number
+      noun-pc3_lrt1_feat2_value=pl
+      noun-pc3_lrt1_feat2_head=itself
+      noun-pc3_lrt1_lri1_inflecting=yes
+      noun-pc3_lrt1_lri1_orth=-v
+
+Here are the new lrts added to show -i and -v show possession:
+
+    noun-pc2_lrt5_name=OBL_SG_POSSESSIVE
+      noun-pc2_lrt5_feat1_name=poss-strat1
+      noun-pc2_lrt5_feat1_value=possessor
+      noun-pc2_lrt5_feat1_head=itself
+      noun-pc2_lrt5_lri1_inflecting=yes
+      noun-pc2_lrt5_lri1_orth=-i
+
+    noun-pc3_lrt3_name=OBL_PL_POSSESSIVE
+      noun-pc3_lrt3_feat1_name=poss-strat1
+      noun-pc3_lrt3_feat1_value=possessor
+      noun-pc3_lrt3_feat1_head=itself
+      noun-pc3_lrt3_lri1_inflecting=yes
+      noun-pc3_lrt3_lri1_orth=-v
+
+Finally, we wanted to try the feedback given on lab 5 in regards to underspecifying an lrt to account for the ambiguity of -ən being licensed by both the 3PL.NPST lrt and 1PL.NPST lrts.
+
+ʃatʃ-iʃt kar-v di-ən
+dog-PL.NOM car-OBL.PL hit-3PL.NPST
+'Dogs hit cars.'
+In wbl.tdl we made these changes:
+
+person := *top*.
+1st-or-3rd := person.
+1st := 1st-or-3rd.
+2nd := person.
+3rd := 1st-or-3rd.
+
+And combined the two lrts into one.
+
+3PL_1PL_NPST_Verb_Suffix-lex-rule := verb-pc4-lex-rule-super &
+  [ SYNSEM.LOCAL [ CONT.HOOK.INDEX.E.TENSE npst,
+                   CAT.VAL.SUBJ.FIRST.LOCAL.CONT.HOOK.INDEX.PNG [ NUM pl,
+                                                                  PER 1st-or-3rd ] ] ].
+
+We reflected these changes in irules.tdl by creating one rule instead of two.
+
+3PL_1PL_NPST_Verb_Suffix-suffix :=
+%suffix (* -ən)
+3PL_1PL_NPST_Verb_Suffix-lex-rule.
+
+ **********QUESTION 3 **********
+
+3.1 Initial test corpus
+1. How many items parsed? 157/659
+2. What is the average number of parses per parsed item? 7.15
+3. How many parses did the most ambiguous item receive? 136
+
+3.2 Final test corpus
+1. How many items parsed? 86/659
+2. What is the average number of parses per parsed item? 9.17
+3. How many parses did the most ambiguous item receive? 67
+
+3.3 Initial testsuite
+1. How many items parsed? 26/67
+2. What is the average number of parses per parsed item? 3.62
+3. How many parses did the most ambiguous item receive? 23
+
+3.4 Final testsuite
+1. How many items parsed? 11/67
+2. What is the average number of parses per parsed item? 4.64
+3. How many parses did the most ambiguous item receive? 10
+
+Implementing the adnominal possession seems to have caused ambiguity in parses. 
+Noun-pc2_lrt1 and OBL_SG_POSSESSIVE cause ambiguous parses in maʐ-i:
+
+#5230
+taw maʐ-i win-t
+2SG.OBL 1SG.OBL -OBL see -PST
+You saw me.
+
+Noun-pc3_lrt1 and OBL_PL_POSSESSIVE also cause ambiguous parses in bajt-v:
+
+#5260
+maʐ bajt-v çan-tu
+1SG.OBL song -OBL.PL say -PLPF
+I sang the songs.
+
