@@ -132,11 +132,13 @@ npst := tense.
 fut := tense.
 pst := tense.
 plpf := tense.
+present := tense.
 
 ;;; Aspect
 
 cmpl := aspect.
 pfv := aspect.
+no-aspect := aspect.
 
 ;;; Mood
 

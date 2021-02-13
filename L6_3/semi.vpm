@@ -36,32 +36,38 @@ COG-ST : COG-ST
   activ-or-less <> activ-or-less
   * <> *
 
+PNG.PN : PER NUM
+  1sg <> 1st sg
+  1pl <> 1st pl
+  1per <> 1st !
+  1per << 1st *
+  2sg  <> 2nd sg
+  2pl  <> 2nd pl
+  2per <> 2nd !
+  2per << 2nd *
+  3sg  <> 3rd sg
+  3pl  <> 3rd pl
+  3per <> 3rd !
+  3per << 3rd *
+  *    >> ! !
+  !    << * *  
 
-PNG.PER : PNG.PER
-  3rd <> 3rd
-  2nd <> 2nd
-  1st <> 1st
+PNG.GEND : GEND
   * <> *
 
-PNG.NUM : PNG.NUM
-  sg <> sg
-  pl <> pl
-  * <> *
-
-PNG.GEND : PNG.GEND
-  * <> *
-
-E.TENSE : E.TENSE
+E.TENSE : TENSE
   npst <> npst
+  present <> npst
   fut <> fut
   pst <> pst
   plpf <> plpf
   * <> *
 
-E.ASPECT : E.ASPECT
+E.ASPECT : ASPECT
   cmpl <> cmpl
   pfv <> pfv
-  * <> *
+  * >> no-aspect
+  no-aspect << [e]
 
 E.MOOD : E.MOOD
   oblig <> oblig

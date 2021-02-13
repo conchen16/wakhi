@@ -50,7 +50,7 @@
    '(#\space #\! #\" #\& #\' #\( #\)
      #\* #\+ #\, #\− #\. #\/ #\\ #\;
      #\< #\> #\? #\@ #\[ #\] #\^ #\`
-     #\{ #\| #\} #\~)
+     #\{ #\| #\} #\~ #\=)
    #+:ics
    '(#\ideographic_full_stop #\fullwidth_question_mark 
      #\horizontal_ellipsis #\fullwidth_full_stop
