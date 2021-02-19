@@ -3438,7 +3438,12 @@ basic-adjective-lex := norm-sem-lex-item &
 
 basic-intersective-adjective-lex := basic-adjective-lex &
   [ SYNSEM [ LOCAL.CONT.HOOK.XARG ref-ind & #xarg,
-             LKEYS.KEYREL.ARG1 #xarg ] ].
+             LKEYS.KEYREL.ARG1 #xarg,
+              LOCAL.CAT.VAL.SUBJ <[ LOCAL [ CONT.HOOK.INDEX #xarg,
+                                       CAT [ VAL [ SPR < >,
+                                                   COMPS < > ],
+                                             HEAD noun & [CASE nom] ] ] ]>
+              ] ].
 
 ; Scopal Adjectives
 ; TJT 2014-05-07 Trying to fit scopals back into new hierarchy.

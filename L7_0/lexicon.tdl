@@ -421,15 +421,24 @@ to := 2SG_obl_noun-noun-lex &
   [ STEM < "to" >,
     SYNSEM.LKEYS.KEYREL.PRED "pron_rel" ].
 
-;;; Adjectives
+;;; Adjectives and Adpositions
 
-tsə-a := normadp1-norm-adposition-lex &
+tsə-a := norm-adposition-lex &
   [ STEM < "tsə-a" >,
     SYNSEM.LKEYS.KEYREL.PRED "_from_p_rel" ].
 
-tərə-a := normadp2-norm-adposition-lex &
+tərə-a := norm-adposition-lex &
   [ STEM < "tərə-a" >,
     SYNSEM.LKEYS.KEYREL.PRED "_at_p_rel" ].
+
+tə-m := norm-adposition-lex &
+  [ STEM < "tə-m" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_in_p_rel" ].
+
+priʃon := sad_adj-adj-lex &
+  [ STEM < "priʃon" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_sad_a_rel" ].
+
 
 ;;; Verbs
 
@@ -767,10 +776,6 @@ j-a := det1-determiner-lex &
 
 j-a-w-r := det3-determiner-lex &
   [ STEM < "j-a-w-r" >,
-    SYNSEM.LKEYS.KEYREL.PRED "_exist_q_rel" ].
-
-tərə-a := det4-determiner-lex &
-  [ STEM < "tərə-a" >,
     SYNSEM.LKEYS.KEYREL.PRED "_exist_q_rel" ].
 
 j-a-w_3Dʂ := det5-determiner-lex &

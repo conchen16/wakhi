@@ -66,3 +66,5 @@ np7-bottom-coord := np7-bottom-coord-rule.
 np8-top-coord := np8-top-coord-rule.
 
 np8-bottom-coord := np8-bottom-coord-rule.
+
+n-bar-pred := n-bar-predicate-rule.

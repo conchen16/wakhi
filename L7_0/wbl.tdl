@@ -604,38 +604,59 @@ aux15-aux-lex := arg-comp-aux-no-pred &
   [ SYNSEM.LOCAL.CAT.VAL [ SUBJ.FIRST.LOCAL.CONT.HOOK.INDEX.PNG [ PER 3rd,
                                                                   NUM sg ],
 			               COMPS.FIRST.LOCAL.CAT.HEAD.FORM finite ] ].
+;;; Adjectives
 
+adj-lex := basic-intersective-adjective-lex.
+
+sad_adj-adj-lex := basic-intersective-adjective-lex .
+;  [ SYNSEM.LOCAL.CAT [ POSTHEAD -,
+;                       VAL.SUBJ < >,
+;                       HEAD.PRD + ] ].
+
+; Basic attributive adjective definition
+
+attr-adj-lex := adj-lex & intersective-mod-lex &
+  [ SYNSEM.LOCAL.CAT.HEAD.MOD < [ LOCAL.CAT [ HEAD noun,
+                                              VAL.SPR cons ] ] > ].
 ;;; Complementizers
 
 ;;; Others
 
+
+
 norm-adposition-lex := norm-sem-lex-item & no-hcons-lex-item & basic-intersective-mod-lex & non-local-none-lex-item &
-  [ ARG-ST < #comp >,
-    SYNSEM [ LKEYS.KEYREL arg12-ev-relation &
-                          [ PRED #pred,
-                            ARG2 #ind ],
-             L-QUE #lque,
-             LOCAL [ CONT.RELS.LIST < [ PRED #pred,
-                                        ARG0 event,
-                                        ARG1 event-or-ref-index ] >,
-                     CAT [ WH.BOOL -,
-                           VAL [ SPR < >,
-                                 SPEC < >,
-                                 SUBJ < >,
-                                 COMPS < #comp &
-                                         [ L-QUE #lque,
-                                           LOCAL [ CAT [ HEAD noun,
-                                                         VAL.SPR < > ],
-                                                   CONT.HOOK.INDEX #ind ] ] > ],
-                           HEAD adp &
-                                [ MOD < [ LOCAL.CAT [ VAL.SPR cons,
-                                                      WH.BOOL -,
-                                                      HEAD.AUX - ] ] > ] ] ] ] ].
+ [ ARG-ST < #comp >,
+   SYNSEM [ LKEYS.KEYREL arg12-ev-relation &
+                         [ PRED #pred,
+                           ARG1 #xarg,
+                           ARG2 #ind ],
+            L-QUE #lque,
+            LOCAL [ CONT.RELS.LIST < [ PRED #pred,
+                                       ARG0 event,
+                                       ARG1 event-or-ref-index ] >,
+                    CONT.HOOK [ XARG #xarg],
+                    CAT [ WH.BOOL -,
+                          HEAD.MOD < [ LOCAL [ CAT [ HEAD +nv,
+						      VAL.SPR cons ],
+						CONT.HOOK.INDEX #xarg ]] >,
+                          VAL [ SPR < >,
+                                SPEC < >,
+                                SUBJ <
+                                       [ LOCAL [ CONT.HOOK.INDEX #xarg,
+                                       CAT [ VAL [ SPR < >,
+                                                   COMPS < > ],
+                                             HEAD noun & [CASE nom] ] ] ]>,
+                                COMPS < #comp &
+                                        [ L-QUE #lque,
+                                          LOCAL [ CAT [ HEAD noun,
+                                                        VAL.SPR < > ],
+                                                  CONT.HOOK.INDEX #ind ] ] > ],
+                          HEAD adp &
+                               [ MOD < [ LOCAL.CAT [ VAL.SPR cons,
+                                                     WH.BOOL -,
+                                                     HEAD.AUX - ] ] > ] ] ] ] ].
 
-normadp1-norm-adposition-lex := norm-adposition-lex .
 
-
-normadp2-norm-adposition-lex := norm-adposition-lex .
 
 
 ;;; Determiners
@@ -676,6 +697,53 @@ det10-determiner-lex := determiner-lex & no-icons-lex-item &
 ;;;;;;;;;;;;;;;;;;;
 ;;; Lexical Rules
 ;;;;;;;;;;;;;;;;;;;
+
+;n-bar-predicate-rule := phrase &
+;  [ SYNSEM [ LOCAL.CAT [ HEAD verb ] ],
+;    C-CONT [ HOOK [ LTOP #ltop,
+;		    INDEX #index,
+;		    XARG #arg1 ],
+;	     RELS.LIST < arg12-ev-relation &
+;		   [ PRED "_be_v_id_rel",
+;		     LBL #ltop,
+;		     ARG0 #index,
+;		     ARG1 #arg1,
+;		     ARG2 #arg2 ],
+;		   quant-relation &
+;		   [ PRED "exist_q_rel",
+;		     ARG0 #arg2,
+;		     RSTR #harg ] >,
+;	     HCONS.LIST < qeq & [ HARG #harg, LARG #larg ] > ],
+;   ARGS < [ SYNSEM [ LOCAL [ CAT [ HEAD noun ],
+;			      CONT.HOOK [ INDEX #arg2,
+;	                                  LTOP #larg ]]] ] > ].
+
+n-bar-predicate-rule := unary-phrase & nocoord &
+  [ SYNSEM [ LOCAL.CAT [ HEAD verb,
+	  	         VAL [ COMPS < >,
+	  	          SUBJ < [ LOCAL [ CONT.HOOK.INDEX #arg1,
+					         CAT [ HEAD noun,
+				                VAL.SPR < >  ] ] ] >] ],
+             NON-LOCAL #nl ],
+    C-CONT [ HOOK [ LTOP #ltop,
+		    INDEX #index,
+		    XARG #arg1 ],
+	     RELS.LIST < arg12-ev-relation &
+		   [ PRED "_be_v_id_rel",
+		     LBL #ltop,
+		     ARG0 #index,
+		     ARG1 #arg1,
+		     ARG2 #arg2 ],
+		   quant-relation &
+		   [ PRED "exist_q_rel",
+		     ARG0 #arg2,
+		     RSTR #harg ] >,
+	     HCONS.LIST < qeq & [ HARG #harg, LARG #larg ] > ],
+    ARGS < [ SYNSEM [ LOCAL [ CAT [ HEAD noun,
+                          VAL.SPR cons ],
+                          CONT.HOOK [ INDEX #arg2,
+                                      LTOP #larg ]],
+                  NON-LOCAL #nl ]] > ].
 
 ;;; Intermediate rule types
 
