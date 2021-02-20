@@ -1,0 +1,392 @@
+Wakhi
+LAB 7
+Connie Chen
+Dongqi Su
+
+ **********QUESTION 1 **********
+Based on the patterns we see in the text corpus, since we couldn’t find anything in the descriptive grammar, non-verbal predicates occur without copulas. NPs, adjectives, and adpositions can function as predicates in Wakhi and a copula is not used. Therefore they function as stand-alone predicates. The predicates occur after the subject which is consistent with the general word order of Wakhi. 
+
+#820 NP Predicate
+j-a-w=i niv ustod
+DEM-MED-PRO==3SG now teacher
+“He is a teacher now.”
+
+#120 Adj Predicate
+j-a maj-iʃt tiz
+DEM-MED sheep-PL.NOM quick
+“The sheep are quick.”
+
+#150 Adp Predicate
+j-a mɨr-iʃt tsə-a dkon-n
+DEM-MED apple-PL.NOM from-MED store-ABL
+“The apples are from the store.”
+
+
+ **********QUESTION 2 **********
+First we’d like to address the changes we made based on LAB 6 feedback.
+Removed present <> npst from semi.vpm since in the test corpus it is underspecified and in the descriptive grammar it is nonpast. Changing this did not change the ace output. Also changed the right-hand side grammar to match english semi.vpm
+
+In lexicon.tdl, we changed all _pron_n_rel to pron_rel.
+
+We also followed the debugging steps of clitics not parsing in lab 6. In wbl.tdl, we added 
+
+aux10-aux-lex := arg-comp-aux-no-pred &
+  [ SYNSEM.LOCAL.CAT.VAL [ SUBJ.FIRST.LOCAL.CONT.HOOK.INDEX.PNG [ PER 1st,
+                                  NUM sg ],
+               COMPS.FIRST.LOCAL.CAT.HEAD.FORM finite ] ].
+
+To say that PERNUM is specified on the subject of the aux and not the aux itself. 
+
+#480
+wuz=əm plan-t-i
+1SG.NOM==1SG fall-PST-PST
+I fell.
+
+We were able to parse this sentence after making this change! We tested it on other sentences with clitics that ended up parsing as well such as 
+
+#sample
+tu=ət plan-t-i
+2SG.NOM==2SG fall-PST-PST
+You fell.
+
+This improved coverage from 89 parse-able sentences to 118. Our distinct analysis also went down from 9.17 to 8.17.
+
+We also addressed the adnominal possession case ambiguity from lab 6 where the oblique case was able to mark both the possessor of adnominal possession as well as an item with oblique case. We added to matrix.tdl
+
+basic-np-top-coord-rule :+
+  [ SYNSEM.LOCAL.CAT.HEAD.CASE #case,
+    LCOORD-DTR.SYNSEM.LOCAL.CAT.HEAD.CASE #case,
+    RCOORD-DTR.SYNSEM.LOCAL.CAT.HEAD.CASE #case ].
+
+And our parses for 
+
+#5230
+taw maʐ-i win-t
+2SG.OBL 1SG.OBL -OBL see -PST
+You saw me.
+
+Went from 12 distinct parses to 4. (NOTE: after making LAB 7 changes this sentence no longer parses. The parse chart shows that there is no top node above the NP and VP to license it as a sentence.)
+
+The second adnominal possession case ambiguity from lab 6 was the plural oblique case. 
+We added COORD - to these
+
+poss-unary-phrase-1 := poss-unary-phrase &
+  [ ARGS < [ SYNSEM.LOCAL [ COORD -,
+                CAT.HEAD.POSSESSOR possessor-1 ] ]>,
+    SYNSEM.LOCAL.CAT [ HEAD.SPEC-INIT +,
+                       VAL.SPEC.FIRST.LOCAL.CAT.POSSESSUM nonpossessive ] ].
+
+poss-unary-phrase-pron-1 := poss-unary-phrase &
+  [ ARGS < [ SYNSEM.LOCAL [ COORD -,
+                CAT.HEAD.POSSESSOR possessor-pron-1 ] ] >,
+    SYNSEM.LOCAL.CAT [ HEAD.SPEC-INIT +,
+                       VAL.SPEC.FIRST.LOCAL.CAT.POSSESSUM nonpossessive ] ].
+
+Our descriptive grammar doesn’t provide us with much info about case restrictions. We have been doing most of our analysis based off the test corpus when it comes to case. We ran the coverage again and our number of parses stayed the same (118) but our distinct analyses went down from 8.17 to 4.76 because of the new constraints we have added.
+
+This concludes our changes to the grammar with regards to LAB 6 feedback though we didn’t realize the ambiguity of oblique case as possessive and non-possessive would haunt us again when we got to the end of Lab 7.
+
+ADPOSITIONS AS STAND-ALONE PREDICATES:
+Starting lab 7, we added 2 adpositions “from” and “at” to lexicon.tdl
+
+And then we added the lexical types licensing these adpositions
+tsə-a := norm-adposition-lex &
+  [ STEM < "tsə-a" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_from_p_rel" ].
+
+tərə-a := -norm-adposition-lex &
+  [ STEM < "tərə-a" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_at_p_rel" ].
+
+We got deleted the incorrect instance of an adposition as a determiner:
+ 
+tərə-a := det4-determiner-lex &
+ [ STEM < "tərə-a" >,
+   SYNSEM.LKEYS.KEYREL.PRED "_exist_q_rel" ].
+
+
+We added the adjective “priʃon” meaning “sad” to parse “the dogs are sad”. We later change this to have _hungry_a_rel to use in the mmt.
+
+We added this in lexicon.tdl:
+
+priʃon := sad_adj-adj-lex &
+ [ STEM < "priʃon" >,
+   SYNSEM.LKEYS.KEYREL.PRED "_sad_a_rel" ].
+
+And also in the wbl.tdl with the help of the customization system:
+
+adj-lex := basic-intersective-adjective-lex.
+
+sad_adj-adj-lex := attr-adj-lex &
+  [ SYNSEM.LOCAL.CAT [ POSTHEAD -,
+                       VAL.SUBJ < >,
+                       HEAD.PRD + ] ].
+
+; Basic attributive adjective definition
+
+attr-adj-lex := adj-lex & intersective-mod-lex &
+  [ SYNSEM.LOCAL.CAT.HEAD.MOD < [ LOCAL.CAT [ HEAD noun,
+                                              VAL.SPR cons ] ] > ].
+
+
+norm-adposition-lex := norm-sem-lex-item & no-hcons-lex-item & basic-intersective-mod-lex & non-local-none-lex-item &
+  [ ARG-ST < #comp >,
+    SYNSEM [ LKEYS.KEYREL arg12-ev-relation &
+                          [ PRED #pred,
+                            ARG2 #ind ],
+             L-QUE #lque,
+             LOCAL [ CONT.RELS.LIST < [ PRED #pred,
+                                        ARG0 event,
+                                        ARG1 event-or-ref-index ] >,
+                     CAT [ WH.BOOL -,
+                           VAL [ SPR < >,
+                                 SPEC < >,
+                                 SUBJ < >,
+                                 COMPS < #comp &
+                                         [ L-QUE #lque,
+                                           LOCAL [ CAT [ HEAD noun,
+                                                         VAL.SPR < > ],
+                                                   CONT.HOOK.INDEX #ind ] ] > ],
+                           HEAD adp &
+                                [ MOD < [ LOCAL.CAT [ VAL.SPR cons,
+                                                      WH.BOOL -,
+                                                      HEAD.AUX - ] ] > ] ] ] ] ].
+
+We wanted to first get the head-subj rule to license the NP and PP of a sentence so we changed roots.tdl by adding HEAD +vp whereas it was originally HEAD verb. We later changed it to +nvjp because we were having trouble parsing sentences with NP predicates.
+
+root := sign &
+ [ SYNSEM [ NON-LOCAL non-local-none,
+            LOCAL [ COORD -,
+                    CAT [ VAL [ SUBJ < >,
+                                COMPS < > ],
+                          MC +,
+                          HEAD +nvjp &
+                               [ FORM finite ] ] ] ] ].
+
+We addressed the non-empty subj problem by changing in wbl.tdl: 
+
+norm-adposition-lex := norm-sem-lex-item & no-hcons-lex-item & basic-intersective-mod-lex & non-local-none-lex-item &
+[ ARG-ST < #comp >,
+  SYNSEM [ LKEYS.KEYREL arg12-ev-relation &
+                        [ PRED #pred,
+                          ARG1 #xarg,
+                          ARG2 #ind ],
+           L-QUE #lque,
+           LOCAL [ CONT.RELS.LIST < [ PRED #pred,
+                                      ARG0 event,
+                                      ARG1 event-or-ref-index ] >,
+                   CONT.HOOK [ XARG #xarg],
+                   CAT [ WH.BOOL -,
+                         HEAD.MOD < [ LOCAL [ CAT [ HEAD +nv,
+                       VAL.SPR cons ],
+                 CONT.HOOK.INDEX #xarg ]] >,
+                         VAL [ SPR < >,
+                               SPEC < >,
+                               SUBJ.FIRST.LOCAL.CAT.HEAD.CASE nom,
+                               COMPS < #comp &
+                                       [ L-QUE #lque,
+                                         LOCAL [ CAT [ HEAD noun,
+                                                       VAL.SPR < > ],
+                                                 CONT.HOOK.INDEX #ind ] ] > ],
+                         HEAD adp &
+                              [ MOD < [ LOCAL.CAT [ VAL.SPR cons,
+                                                    WH.BOOL -,
+                                                    HEAD.AUX - ] ] > ] ] ] ] ].
+
+
+Here we added these 3 things in order to share the index of the SUBJ with the XARG and ARG1 of the adposition. 
+      
+ ARG1 #xarg, CONT.HOOK [ XARG #xarg], HEAD.MOD < [ LOCAL [ CAT [ HEAD +nv,
+                       VAL.SPR cons ],
+                 CONT.HOOK.INDEX #xarg ]] >
+
+We also specified the SUBJ to be case nom. We went from 7 parses of: 
+
+j-a mɨr-iʃt tsə-a dkon-n
+DEM-MED apple-PL.NOM from-MED store-ABL
+“The apples are from the store.”
+
+to 5. The extraneous parses showed variations of “the apples”, “store”, and “from the store” being licensed with a POSS_UNARY rule. Also none of the MRSs were correct because the ARG1 of _from_p_rel was never shared with the NP or anything at all.
+We realized we forgot to share the index of SUBJ with the XARG and ARG1 of the preposition so we changed SUBJ to
+
+SUBJ <
+      [ LOCAL [ CONT.HOOK.INDEX #xarg,
+      CAT [ VAL [ SPR < >,
+                  COMPS < > ],
+            HEAD noun & [CASE nom] ] ] ]>
+
+
+This changed the number of parses from 5 to 1!!! With the correct MRS!!
+(NOTE: after further changes we make below to try and implement the other stand-alone predicates, our parses go up to 15...the correct parse with the correct mrs is still there.)
+
+ADJECTIVES AS STAND-ALONE PREDICATES:
+
+j-a ʃatʃ-iʃt priʃon
+DEM-MED dog-OBL.PL sad
+“The dogs are sad”
+
+The parse wasn’t giving us the correct mrs index references between “priʃon” and the NP “j-a ʃatʃ-iʃt” so we stated that the super type was basic-intersective-adjetive-lex instead of attr-adj-lex and edited basic-intersective-adjective-lex to have the same index references as norm-adposition-lex so we could fix the ARG1 of “priʃon” to reference ARG0 of “ʃatʃ-iʃt” 
+
+basic-intersective-adjective-lex := basic-adjective-lex &
+ [ SYNSEM [ LOCAL.CONT.HOOK.XARG ref-ind & #xarg,
+            LKEYS.KEYREL.ARG1 #xarg,
+             LOCAL.CAT.VAL.SUBJ <[ LOCAL [ CONT.HOOK.INDEX #xarg,
+                                      CAT [ VAL [ SPR < >,
+                                                  COMPS < > ],
+                                            HEAD noun & [CASE nom] ] ] ]>
+             ] ].
+
+The sentence has 1 parse with the correct mrs.
+
+However, trying to parse:
+
+j-a ʃatʃ=i priʃon
+DEM-MED dog=3SG sad
+“The dog is sad.”
+ 
+Returns no parses. It seems like plural subjects can parse fine or perhaps that subjects with clitics are causing a problem.
+
+
+NP AS STAND-ALONE PREDICATES:
+
+j-a ʃatʃ-iʃt j-a mɨr-v
+DEM-MED dog-PL.NOM DEM-MED apple-OBL.PL
+'The dogs are the apples.'
+
+This sentence would not parse. we tried unification testing on the n-bar-pred rule to see where the problem was. We ended up removing VAL.SPR cons from ARGS because it seemed like after trying unification of the object of the sentence "the apples" with the element on n-bar-pred argument structure, there was a unification error in the head-spec rule licensing “the apples” saying that the SPR of “the apples” was null when in the n-bar rule constraint it was VAL.SPR cons. 
+Removing that causes ambiguity of 25 trees. We tried to constrain the VP where it can’t be the specifier or modifier of anything as you demonstrated in class which brought the number of parses to 9.
+
+LOCAL.CAT [ HEAD verb & [ MOD < > ],
+           VAL [ SPEC < >,
+                  COMPS < >,
+                  SUBJ < [ LOCAL [ CONT.HOOK.INDEX #arg1,
+                 CAT [ HEAD noun,
+                     VAL.SPR < >  ] ] ] >] ],
+
+We realized a lot of ambiguity was coming from our many coordination rules so we commented out three VP-T, NP-T, and NP-B coordination rules. Doing those changes brought parses from 9 to 2 trees.
+
+From your canvas reply, we changed SPR cons to SPR < > in the daughter and then remove the quant-relation and the associated qeq from the rule to reflect Wakhi’s NP and not n-bar predicates.
+
+There are two problems. The current 2 parses show ambiguity having to do with the "-v" with the gloss -OBL.PL being licensed by our possessive lrt and our regular OBL.PL case lrt.
+These examples from the test corpus illustrate the difference between -OBL.PL as a possessive versus a non-possesive. (They don't parse because they aren't full sentences.)
+
+j-a-v kitob
+DEM-MED-OBL.PL book
+‘Their book’
+
+j-a mɨr-v
+DEM-MED apple-OBL.PL
+‘The apples’
+
+I posted these examples to our canvas thread on Friday but perhaps you did not see it. These examples showcase the OBL.PL case marker on the determiner and noun of the NPs. Without further info from the descriptive grammar on how to further constrain this “-v”, is this something we will have to accept as always parsing ambiguously?
+Additionally, with regards to our coordination rule parses that I solved by commenting out, should we keep the constraint on the rule saying it accepts NPs?
+root := sign &
+  [ SYNSEM [ NON-LOCAL non-local-none,
+             LOCAL [ COORD -,
+                     CAT [ VAL [ SUBJ < >,
+                                 COMPS < > ],
+                           MC +,
+                           HEAD +nvjp &
+                                [ FORM finite ] ] ] ] ].
+
+ **********QUESTION 3 **********
+
+#15 Adjective
+j-a ʃatʃ-iʃt priʃon
+DEM-MED dog-PL.NOM sad
+“The dogs are hungry”
+
+(NOTE: we changed “priʃon” to have the predicate “hungry” in order to translate the English sentences)
+This sentence generates 2 results. It is missing the determiner in both and the first parse does not have the plural case marker.
+
+#ex1
+ʃatʃ priʃon
+Dog sad
+
+#ex2
+ʃatʃ-iʃt priʃon
+dog-PL.NOM sad
+
+#16 Adposition
+j-a ʃatʃ-iʃt tə-m stor
+DEM-MED dog-PL.NOM LOC-PROX store
+“The dogs are in the store”
+
+(NOTE: we changed “stor” to have the predicate “park” in order to translate the English sentences)
+This generates 48 results. A lot of incorrect generations seems to arise from word order (where the position of “stor” and “ʃatʃ-iʃt” are incorrectly interchanged) and incorrect morphology attached to “stor”.
+
+#ex1
+Stor-n tə-m ʃatʃ-iʃt
+store-ABL LOC-PROX dog-PL.NOM
+*store is in dogs
+
+#ex2
+Stor-iʃt-i tə-m ʃatʃ-iʃt
+store-PL.NOM-OBL LOC-PROX dog-PL.NOM
+*stores are in dogs
+
+#ex3
+Stor tə-m ʃatʃ-iʃt
+Store LOC-PROX dog-PL.NOM
+*store in dogs
+
+#17 NP
+j-a ʃatʃ-iʃt j-a mɨr-v
+DEM-MED dog-PL.NOM DEM-MED apple-OBL.PL
+“The dogs are the apples.”
+
+(NOTE: we changed “ mɨr” to have the predicate “cat” in order to translate the English sentences) This generates 144 results. They are all incorrect due to the incorrect morphological items attaching to both “ʃatʃ” and “mɨr”. In the previous sentences, “dog” didn’t generate so many instance of “ʃatʃ” with the incorrect morphological items attached. 
+
+#ex1
+ʃatʃ-n mɨr-n
+dog-ABL apple-ABL
+
+#ex2
+ʃatʃ-v mɨr-v-i
+dog-OBL.PL apple-OBL.PL-OBL
+
+#ex3
+ʃatʃ-r mɨr-r
+dog-DAT apple-DAT
+
+Seems like main offenders are -n -i -v -r which all are all instances of cases.
+
+ **********QUESTION 4 **********
+Unfortunately, we could not find information on wh questions in non-veral predicates within our descriptive grammar or test corpus.
+
+ **********QUESTION 5 **********
+
+5.1 Initial test corpus
+1. How many items parsed? 86/659
+2. What is the average number of parses per parsed item? 9.17
+3. How many parses did the most ambiguous item receive? 67
+
+5.2 Final test corpus
+1. How many items parsed? 120/659
+2. What is the average number of parses per parsed item? 5.37
+3. How many parses did the most ambiguous item receive? 24
+
+5.3 Initial testsuite
+1. How many items parsed? 10/71
+2. What is the average number of parses per parsed item? 4.8
+3. How many parses did the most ambiguous item receive? 10
+
+5.4 Final testsuite
+1. How many items parsed? 18/71
+2. What is the average number of parses per parsed item? 3.94
+3. How many parses did the most ambiguous item receive? 15
+
+#1870
+maʐ bajt çan-tu
+1SG.OBL song say -PLPF
+“I sang.”
+
+It seems that there is ambiguity with regards to the daughters of S being NP and VP or only a VP. Does this have to do with the constraints we have added to the HEAD feature of the root? This can also be seen in this sentence:
+
+#2200
+j-a-w ustod təj
+DEM -MED PRO teacher exist.PST
+“He was a teacher.”
+
+We see parses where an S node will only license a VP that only licenses an NP. Why is this happening?
+

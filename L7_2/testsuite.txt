@@ -1,0 +1,720 @@
+Language: Wakhi
+Language code: wbl1
+Lines: orth orth-seg gloss translat
+Author: Connie Chen, Dongqi Su
+Date: January 19, 2021
+Source a: "From Oral to Written: A Text-linguistic Study of Wakhi Narratives" by Jaroslava Obrtelova
+Source b: "Differential Subject Marking in Wakhi" by Erin Christine SanGregory
+Source c: "Double oblique case and agreement across two dialects of Wakhi" by Daniel Kaufman
+
+#Ex 1 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+tu=ət puv-i
+tu=ət puv-i
+2SG.NOM=2SG drink-PST
+'You drank'
+
+#Ex 2 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+tu=ət rəd-i
+tu=ət rəd-i
+2SG.NOM=2SG run-PST
+'You ran'
+
+#Ex 3 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+wuz=əm rɨçɨp-i
+wuz=əm rɨçɨp-i
+1SG.NOM=1SG sleep-PST
+'I slept'
+
+#Ex 4 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+wuz rondoj-əm
+wuz rondoj-əm
+1SG.NOM jump-1SG.NPST
+'I am jumping'
+
+#Ex 5 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Agreement
+wuz pats-əm
+wuz pats-əm
+1SG.NOM cook-1SG.NPST
+'I am cooking'
+
+#Ex 6 L3
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+tu=ət puv-∅
+tu=ət puv-∅
+2SG.NOM=2SG drink-2SG.NPST
+'You are drinking'
+
+#Ex 7 L3
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+tu=ət rəd-∅
+tu=ət rəd-∅
+2SG.NOM=2SG run-2SG.NPST
+'You are running'
+
+#Ex 8 L3
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+wuz=əm rɨçɨp-əm
+wuz=əm rɨçɨp-əm
+1SG.NOM=1SG sleep-1SG.NPST
+'I am sleeping'
+
+#Ex 9 L3
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+wuz=əm rondoj-əm
+wuz=əm rondoj-əm
+1SG.NOM=1SG jump-1SG.NPST
+'I am jumping'
+
+#Ex 10 L3
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Agreement
+wuz=əm pats-əm
+wuz=əm pats-əm
+1SG.NOM=1SG cook-1SG.NPST
+'I am cooking'
+
+#Ex 11 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Coordination
+tu=ət puv-i=ət rəd-i
+tu=ət puv-i=ət rəd-i
+2SG.NOM=2SG drink-PST=and run-PST
+'You drank and ran'
+
+#Ex 12 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Coordination
+wuz=əm rondoj-i=ət rondoj-i
+wuz=əm rondoj-i=ət rondoj-i
+1SG.NOM=1SG jump-PST=and jump-PST 
+'I jumped and jumped'
+
+#Ex 14 L3
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Coordination
+tu=ət puv=ət-i rəd-i
+tu=ət puv=ət-i rəd-i
+2SG.NOM=2SG drink=and-PST run-PST
+'You drank and ran'
+
+#Ex 15 not sure if grammatical or ungrammatical L3
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Coordination
+tu=ət=ət wuz=əm
+tu=ət=ət wuz=əm
+2SG.NOM=2SG=and 1SG.NOM=1SG
+'You and I'
+
+#Ex 16 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Determiners
+j-a-w j-a kitob dʒoj-i
+j-a-w j-a kitob dʒoj-i
+DEM-MED-PRO DEM-MED book read-PST
+'He read that book'
+
+#Ex 17 L3
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Determiners
+j-a-w a-j kitob dʒoj-i
+j-a-w a-j kitob dʒoj-i
+DEM-MED-PRO MED-DEM book read-PST
+'He read that book'
+
+#Ex 18 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Determiners
+j-a-w j-a kitob j-a-w-r rand-i
+j-a-w j-a kitob j-a-w-r rand-i
+DEM-MED-PRO DEM-MED book DEM-MED-PRO-DAT give-PST
+'He gave that book to him'
+
+#Ex 19 L3
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Determiners
+wuz=əm j-a kitob j-a-w-r rand-i
+wuz=əm j-a kitob j-a-w-r rand-i
+1SG.NOM=1SG DEM-MED book DEM-MED-PRO-DAT give-PST
+'I gave that book to him'
+
+#Ex 20 L3
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Determiners
+wuz=əm a-j kitob dʒoj-i
+wuz=əm a-j kitob dʒoj-i
+1SG.NOM=1SG MED-DEM book read-PST
+'I read that book'
+
+#Ex 21 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm puv-ak pers-i
+wuz=əm puv-ak pers-i
+1SG.NOM=1SG drink-INF ask-PST
+'I ask to drink'
+
+#Ex 22 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rəd-ak pers-i
+wuz=əm rəd-ak pers-i
+1SG.NOM=1SG run-INF ask-PST
+'I ask to run'
+
+#Ex 23 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rɨçɨp-ak pers-i
+wuz=əm rɨçɨp-ak pers-i
+1SG.NOM=1SG sleep-INF ask-PST
+'I ask to sleep'
+
+#Ex 24 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rondoj-ak pers-i
+wuz=əm rondoj-ak pers-i
+1SG.NOM=1SG jump-INF ask-PST
+'I ask to jump'
+
+#Ex 25 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm pats-ak pers-i
+wuz=əm pats-ak pers-i
+1SG.NOM=1SG cook-INF ask-PST
+'I ask to cook'
+
+#Ex 26 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm puv-i
+wuz=əm puv-i
+1SG.NOM=1SG drink-PST
+`I drank'
+
+#Ex 27 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rəd-i
+wuz=əm rəd-i
+1SG.NOM=1SG run-PST
+`I ran'
+
+#Ex 28 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rɨçɨp-i
+wuz=əm rɨçɨp-i
+1SG.NOM=1SG sleep-PST
+`I slept'
+
+#Ex 29 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm rondoj-i
+wuz=əm rondoj-i
+1SG.NOM=1SG jump-PST
+`I jumped'
+
+#Ex 30 L2
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Tense Aspect Mood
+wuz=əm pats-i
+wuz=əm pats-i
+1SG.NOM=1SG cook-PST
+`I cooked'
+
+#Ex 31 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm puv=əm pers-i
+wuz=əm puv=əm pers-i
+1SG.NOM=1SG drink=1SG ask-PST
+'I ask to drink'
+
+#Ex 32 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rəd=əm pers-i
+wuz=əm rəd=əm pers-i
+1SG.NOM=1SG run=1SG ask-PST
+'I ask to run'
+
+#Ex 33 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rɨçɨp=əm pers-i
+wuz=əm rɨçɨp=əm pers-i
+1SG.NOM=1SG sleep=1SG ask-PST
+'I ask to sleep'
+
+#Ex 34 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rondoj=əm pers-i
+wuz=əm rondoj=əm pers-i
+1SG.NOM=1SG jump=1SG ask-PST
+'I ask to jump'
+
+#Ex 35 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm pats=əm pers-i
+wuz=əm pats=əm pers-i
+1SG.NOM=1SG cook=1SG ask-PST
+'I ask to cook'
+
+#Ex 36 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm puv=əm
+wuz=əm puv=əm
+1SG.NOM=1SG drink=1SG
+`I drank'
+
+#Ex 37 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rəd=əm
+wuz=əm rəd=əm
+1SG.NOM=1SG run=1SG
+`I ran'
+
+#Ex 38 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rɨçɨp=əm
+wuz=əm rɨçɨp=əm
+1SG.NOM=1SG sleep=1SG
+`I slept'
+
+#Ex 39 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm rondoj=əm
+wuz=əm rondoj=əm
+1SG.NOM=1SG jump=1SG
+`I jumped'
+
+#Ex 40 L2
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Tense Aspect Mood
+wuz=əm pats=əm
+wuz=əm pats=əm
+1SG.NOM=1SG cook=1SG
+`I cooked'
+
+#Ex 41 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Clausal modifiers
+wuz=əp nəwiʃ-əm j-a-w=ʂ=ki dʒoj-t
+wuz=əp nəwiʃ-əm j-a-w=ʂ=ki dʒoj-t 
+1SG.NOM=FUT write-1SG.NPST DEM-MED-PRO=PROG=COND read-3SG.NPST
+'I will write if he reads.'
+
+#Ex 42 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Clausal modifiers
+wuz=əp nəwiʃ-əm niv=ʂ=ki j-a-w dʒoj-t
+wuz=əp nəwiʃ-əm niv=ʂ=ki j-a-w dʒoj-t
+1SG.NOM=FUT write-1SG.NPST now=PROG=COND DEM-MED-PRO read-3SG.NPST
+'I will write if he now reads.'
+
+#Ex 43 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Clausal modifiers
+wuz=əp di-əm niv=ʂ=ki j-a-w dʒoj-t
+wuz=əp di-əm niv=ʂ=ki j-a-w dʒoj-t
+1SG.NOM=FUT swim-1SG.NPST now=PROG=COND DEM-MED-PRO read-3SG.NPST
+'I will swim if he now reads.'
+
+#Ex 44 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Clausal modifiers
+wuz=əp nɨmendʒ-əm j-a-w=ʂ=ki dʒoj-t
+wuz=əp nɨmendʒ-əm j-a-w=ʂ=ki dʒoj-t
+1SG.NOM=FUT dance-1SG.NPST DEM-MED-PRO=PROG=COND read-3SG.NPST
+'I will dance if he reads.'
+
+#Ex 45 L4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Clausal modifiers
+wuz=əp rətʂ-əm j-a-w=ʂ dʒoj-t=ki
+wuz=əp rətʂ-əm j-a-w=ʂ dʒoj-t=ki
+1SG.NOM=FUT go-1SG.NPST DEM-MED-PRO=PROG read-3SG.NPST=COND
+'I will go if he reads.'
+
+#Ex 46 L4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Clausal modifiers
+wuz=əp nɨmendʒ-əm=ki j-a-w=ʂ dʒoj-t
+wuz=əp nɨmendʒ-əm=ki j-a-w=ʂ dʒoj-t
+1SG.NOM=FUT dance-1SG.NPST=COND DEM-MED-PRO=PROG read-3SG.NPST
+'I will dance if he reads.'
+
+#Ex 47 L4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Clausal modifiers
+wuz=əp nəwiʃ-əm j-a-w=ki=ʂ dʒoj-t
+wuz=əp nəwiʃ-əm j-a-w=ki=ʂ dʒoj-t
+1SG.NOM=FUT write-1SG.NPST DEM-MED-PRO=COND=PROG read-3SG.NPST
+'I will write if he reads.'
+
+#Ex 48 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Embedded declaratives
+wuz to win-əm ki tu=ət rɨçɨp-i.
+wuz to win-əm ki tu=ət rɨçɨp-i.
+1SG.NOM until see-1SG.NPST COMP 2SG.NOM=2SG sleep-PST
+‘I see that you slept.’
+
+#Ex 49 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Embedded declaratives
+wuz çan-t ki maʐ dʒoj-i.
+wuz çan-t ki maʐ dʒoj-i.
+1SG.NOM say-PST COMP 1SG.OBL read-PST
+‘I said that I read.’
+
+#Ex 50 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Embedded declaratives
+wuz to win-əm ki tu=ət dʒoj-i.
+wuz to win-əm ki tu=ət dʒoj-i.
+1SG.NOM until see-1SG.NPST COMP 2SG.NOM=2SG read-PST
+‘I see that you read.’
+
+#Ex 51 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Embedded declaratives
+wuz çan-t ki maʐ rɨçɨp-i.
+wuz çan-t ki maʐ rɨçɨp-i.
+1SG.NOM say-PST COMP 1SG.OBL sleep-PST
+‘I said that I slept.’
+
+#Ex 52 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Embedded declaratives
+maʐ-r=i malɨm ki to-i j-a kitob dʒoj-i.
+maʐ-r=i malɨm ki to-i j-a kitob dʒoj-i.
+1SG.OBL-DAT=3SG known COMP 2SG.OBL-OBL DEM-MED book read-PST
+‘I know you read the book.’
+
+#Ex 53 L4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Embedded declaratives
+wuz to win-əm ki rɨçɨp-i tu=ət.
+wuz to win-əm ki rɨçɨp-i tu=ət.
+1SG.NOM until see-1SG.NPST COMP sleep-PST 2SG.NOM=2SG.
+‘I see that you slept.’ 
+
+#Ex 54 L4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Embedded declaratives
+wuz çan-t ki dʒoj-i maʐ.
+wuz çan-t ki dʒoj-i maʐ.
+1SG.NOM say-PST COMP read-PST 1SG.OBL.
+‘I said that I read’
+
+#Ex 55 L4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Embedded declaratives
+wuz çan-t=ki maʐ rɨçɨp-i.
+wuz çan-t=ki maʐ rɨçɨp-i.
+1SG.NOM say-PST=COMP 1SG.OBL sleep-PST
+‘I said that I slept’
+
+#Ex 56 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Wh questions
+j-a-w=i ʧiz-r di-tk?
+j-a-w=i ʧiz-r di-tk?
+DEM-MED-PRO=3SG what-DAT swim-PRF?
+Why is s/he swimming?
+
+#Ex 57 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Wh questions
+j-a-w=i ʧiz-r gəfs-tk?
+j-a-w=i ʧiz-r gəfs-tk?
+DEM-MED-PRO=3SG what-DAT run-PRF?
+Why is s/he running? 
+
+#Ex 58 L4
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Wh questions
+ʧiz-r=ət xɨʃ?
+ʧiz-r=ət xɨʃ?
+what-DAT=2SG happy?
+Why are you happy?
+
+#Ex 59 L4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Wh questions
+ʧiz-r j-a-w=i gəfs-tk?
+ʧiz-r j-a-w=i gəfs-tk?
+what-DAT DEM-MED-PRO=3SG run-PRF?
+Why is s/he running? 
+
+#Ex 60 L4
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Wh questions
+j-a-w=i  di-tk ʧiz-r?
+j-a-w=i  di-tk ʧiz-r?
+DEM-MED-PRO=3SG  swim-PRF what-DAT?
+Why is s/he swimming?
+
+#Ex 61 L5
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Case
+wuz gəfs-əm
+wuz gəfs-əm
+1SG.NOM run-1SG.NPST
+'I run.'
+
+#Ex 62 L5
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Case
+wuz to win-əm
+wuz to win-əm
+1SG.NOM 2SG.OBL see-1SG.NPST
+'I see you.'
+
+#Ex 63 L5
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Case
+wuz tu win-əm
+wuz tu win-əm
+1SG.NOM 2SG.NOM see-1SG.NPST
+'I see you.'
+
+#Ex 64 L5
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Case
+maʐ gəfs-əm
+maʐ gəfs-əm
+1SG.OBL run-1SG.NPST
+'I run.'
+
+#Ex 65 L5
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Case
+maʐ to win-t
+maʐ to win-t
+1SG.OBL 2SG.OBL see-PST
+'I saw you.'
+
+#Ex 66 L5
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Case
+ʃatʃ-iʃt rɨçɨp-ən
+ʃatʃ-iʃt rɨçɨp-ən
+dog-PL.NOM sleep-3PL.NPST
+'Dogs sleep.'
+
+#Ex 67 L5
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Case
+ʃatʃ-iʃt kar-v di-ən
+ʃatʃ-iʃt kar-v di-ən
+dog-PL.NOM car-OBL.PL hit-3PL.NPST
+'Dogs hit cars.'
+
+#Ex 68 L7
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Non-Verbal predicates
+j-a ʝu=i tiz
+j-a ʝu=i tiz
+DEM-MED cow=3SG quick
+'The cow is quick.'
+
+
+#Ex 69 L7
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Non-Verbal predicates
+j-a mɨr-iʃt tsə-a dkon-n
+j-a mɨr-iʃt tsə-a dkon-n
+DEM-MED apple-PL.NOM from-MED store-ABL
+The apples are from the store.'
+
+
+#Ex 70 L7
+Source: author
+Vetted: f
+Judgment: g
+Phenomena: Non-Verbal predicates
+j-a-w=i ustod
+j-a-w=i ustod
+DEM-MED-PRO=3SG teacher
+'He is a teacher.'
+
+#Ex 71 L7
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Non-Verbal predicates
+j-a tiz ʝu=i
+j-a tiz ʝu=i 
+DEM-MED quick cow=3SG
+'The cow is quick.'
+
+#Ex 72 L7
+Source: author
+Vetted: f
+Judgment: u
+Phenomena: Non-Verbal predicates
+ustod j-a-w=i
+ustod j-a-w=i
+teacher DEM-MED-PRO=3SG
+'He is a teacher.'
