@@ -1,0 +1,2 @@
+;;; -*- Mode: TDL; Coding: utf-8 -*-
+zero_marking-lex := zero_marking-lex-rule.
