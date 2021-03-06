@@ -1,0 +1,433 @@
+Wakhi
+LAB 9
+Connie Chen
+Dongqi Su
+ **********QUESTION 1 **********
+
+MRS REFINEMENT
+
+1) When parsing this sentence, we noticed “_eat_v_rel” had an ARG2 which means that it was a transitive verb. We corrected its type from the trans_and_intrans_verb-lex to the intrans_verb-verb-lex to get rid of the ARG2. This also helped to reduce overgeneration in the MT from 22 results to 4!
+
+ʃatʃ-iʃt jaw-ən
+dog-PL.NOM eat-1/3PL.NPST
+Dogs eat
+
+2) There was a difference in aspect for the sentence:
+
+j-a ʃatʃ-iʃt j-a mɨr-v
+DEM-MED dog-PL.NOM DEM-MED cat-OBL.PL
+“The dogs are the cats”
+
+In the English mrs,  the constraint was [ ASPECT aspect ] but we had default no-aspect in the semi-vpm for Wakhi. Therefore, we made these changes:
+
+;  * >> no-aspect
+ no-aspect <> aspect
+
+ **********QUESTION 2 **********
+Overgeneration
+
+1) We attempt to implement the zero-marking rule because our common nouns are currently underspecified for NUM when their stems should be NUM sg.
+
+We added Common_Nouns-lex-rule-super and zero_marking-lex-rule to wbl.tdl. We also added the flag feature to Common_Nouns-noun-lex. 
+
+Common_Nouns-noun-lex := noun-lex & noun-pc13-or-noun-pc2-rule-dtr & noun-pc16-rule-dtr & noun-pc3-rule-dtr & noun-pc5-rule-dtr &
+ [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.PER 3rd,
+   INFLECTED.COMMON_NOUNS-FLAG - ].
+
+Common_Nouns-lex-rule-super := add-only-no-ccont-rule & const-lex-rule &
+ [ INFLECTED.COMMON_NOUNS-FLAG +,
+   DTR Common_Nouns-noun-lex ].
+
+
+zero_marking-lex-rule := Common_Nouns-lex-rule-super &
+ [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.NUM sg ].
+
+In lexicon.tdl we replaced all common-noun-lex with zero-marking rule
+
+Also added this to wbl.tdl
+
+inflected :+ [ COMMON_NOUNS-FLAG luk ].
+
+infl-satisfied :+ [ COMMON_NOUNS-FLAG na-or-+ ].
+
+We test our implementation with the first mmt sentence. This sentence previously produced 4 generations where  -iʃt seemed to be optional as some sentences had it and some did not. We tried to parse it but it would not parse.
+
+ʃatʃ-iʃt rɨçɨp-ən
+dog-PL.NOM sleep-1/3PL.NPST
+Dogs sleep
+
+After trying interactive unifcation, we realized that we had to change the daughter of the super-type of 3PL_1PL_NPST_Verb_Suffix-lex-rule licensing “-ən” from DTR Trans_and_Intrans_Verbs lex rule to verb-lex because “sleep” is an intransitive verb and we want all verbs to be applicable as a daughter. Previously, the grammar said the rule’s daughter was a trans_and_intrans_verb which is why the “-ən” was not being licensed by the correct verb suffix rule according to the parse chart when the sentence would not parse.
+
+verb-pc4-lex-rule-super := add-only-no-ccont-rule & infl-lex-rule &
+ [ INFLECTED #infl,
+   DTR verb-lex &
+       [ INFLECTED #infl ] ].
+
+It still doesn’t parse because “dogs” is not forming an NP. When trying unification with the bare-np grammar rule and the noun lrt licensing the suffix in “ʃatʃ-iʃt”, we see that there is a discrepancy between the values of the COMMON_NOUNS-FLAG being na-or-+ and -. Not completely sure what na-or-+ is since it was given by the customization system, but other + or - values for features would be instantiated with the value luk instead. So we changed 
+
+infl-satisfied :+ [ COMMON_NOUNS-FLAG na-or-+ ].
+
+To 
+infl-satisfied :+ [ COMMON_NOUNS-FLAG luk ].
+
+And it parses!
+
+Then we realized that to test out the zero-marking rule we need a NUM sg noun. 
+
+ʃatʃ=i rɨçɨp
+dog=3SG sleep
+“dog sleeps”
+
+This wouldnt parse at first because of our previous recent creation of an intransitive verb type which “sleep” is. “-t” would not be a suffix of “sleep” because it was constrained to have a daughter that was transitive. After changing this we received 4 parses where the ambiguity lies in the 2 different rules that can license “-t” which is what we correctly see in Wakhi. We solved this by changing the daughter to be any verb lex
+
+verb-pc1-lex-rule-super := add-only-no-ccont-rule & infl-lex-rule & verb-pc17-or-verb-pc6-rule-dtr & verb-pc24-rule-dtr & verb-pc5-rule-dtr &
+ [ INFLECTED #infl,
+   DTR verb-lex &
+       [ INFLECTED #infl ] ].
+
+In the correct parse where “dog” is licensed by the zero-marking rule, the feature is corrected to NUM sg. But it seems like the ambiguity is also from the zero-marking rule not being obligatory.
+
+At this point, we were given the feedback that we must have the correct value for the flag so we changed it back.
+
+infl-satisfied :+ [ COMMON_NOUNS-FLAG na-or-+ ].
+
+We also changed “-iʃt” in irules.tdl to inherit from the position class of the zero-marking-lex-rule which is Common_Nouns-lex-rule-super.
+
+ʃatʃ-iʃt rɨçɨp-ən
+dog-PL.NOM sleep-1/3PL.NPST
+Dogs sleep
+
+This helped this sentence parse when it wouldn’t before. However, this change causes 0 generation for all out mmt sentences that have the affix “-iʃt”. At this point we had to move on to other things and just reverted back to our previous grammar from lab 8 to start from scratch. There were just too many changes to a bunch of the types and rules in the wbl to comment things out.
+
+2) While testing out the coverage of out mmt, we noticed in the overgeneration that a prefix clitic was occurring spuriously. 
+
+j-a ʃatʃ-iʃt kar-v nə=di-ən
+DEM-MED dog-PL.NOM car-OBL.PL NEG=chase-1/3PL.NPST
+“The dogs don’t chase cars”
+
+We tried to implement “nə” as an auxiliary just as we have implemented our other clitics. We added it to the lexicon.tdl:
+
+nə := neg-aux-lex &
+ [ STEM < "nə" >,
+    SYNSEM.LKEYS.KEYREL.PRED "neg_rel" ].
+
+And we removed it as an instance of a verb lrt from irules.tdl:
+
+verb-pc14_lrt2-suffix :=
+%suffix (* nə=)
+verb-pc14_lrt2-lex-rule.
+
+We added the type to wbl.tdl:
+
+arg-comp-aux-with-pred := arg-comp-aux & hcons-lex-item &
+ [ SYNSEM [ LOCAL.CONT.HCONS.LIST < qeq &
+                                    [ HARG #harg,
+                                      LARG #larg ] >,
+            LKEYS.KEYREL event-relation &
+                         [ ARG1 #harg ] ],
+   ARG-ST < [ ],
+            [ LOCAL.CONT.HOOK.LTOP #larg ] > ].
+
+
+neg-aux-lex := arg-comp-aux-with-pred &
+ [ SYNSEM.LOCAL.CAT.VAL.COMPS.FIRST.LOCAL.CAT.HEAD.FORM finite ].
+
+The sentence now parses! It previously generated 40 results in the mt which were all incorrect. It now generates 0. Comparing the eng and wbl mrs of this sentence, it seems like theTENSE of INDEX does not match up. Eng has the value “present” which is coindexed with ARG0 of “chase”, but in wbl, the INDEX has the value TENSE tense and it is not coindexed with ARG0 of “chase”. Instead ARG0 of “chase” is coindexed with nothing. In wbl, “chase” the TENSE feature in arg0 is “present”. Looking at the sentence parse and the avm of the verb in Wakhi, under arg12-ev-relation (something in the matrix.tdl?), we see pred _chase_v_rel has ARG0 that contains TENSE npst. Because Wakhi doesn’t have a present tense but instead a nonpast tense that is the equivalent of the English present tense, we previously made changes in the semi.vpm accordingly (npst <> present). This explains why we see TENSE present in _chase_v_rel_. 
+
+We definitely struggled this week with cleaning up overgeneration. Ultimately, we also commented out some affixes with concepts we never dealt with to help with overgeneration.
+
+1) The following is a pron_rel that we aren’t sure what it does. It is glossed as “or” but is a pronoun in the test corpus...
+
+;jo := noun26-noun-lex &
+;  [ STEM < "jo" >,
+;    SYNSEM.LKEYS.KEYREL.PRED "pron_rel" ].
+
+
+These two are reflexives that we haven’t handled. 
+
+;çat_1 := noun34-noun-lex &
+;  [ STEM < "çat" >,
+;    SYNSEM.LKEYS.KEYREL.PRED "pron_rel" ].
+
+;çat_2 := Reflexive-noun-lex &
+;  [ STEM < "çat" >,
+;    SYNSEM.LKEYS.KEYREL.PRED "_refl_n_rel" ].
+
+We comment them out after seeing them in the overgeneration of the mmt sentence:
+
+ʐɨ ʃatʃ-iʃt rɨçɨp
+1SG.GEN dog-PL.NOM sleep
+My dogs sleep.
+
+and get 4 results instead of the previous 12. For sentence 19
+
+This affix is glossed as CAUS in the test corpus. We did not deal with causals (?) so we commented these out.
+
+;verb-pc11_lrt1-suffix :=
+;%suffix (* -ɨv)
+;verb-pc11_lrt1-lex-rule.
+
+We still have quite a few affixes causing overgeneration in the mmt they are the more commonly occurring ones in the test corpus. Commenting them out would drop coverage quite a bit.
+
+2) When translating from eng to wbl this sentence showed different generations for cat
+
+piʃ-iʃt woz ʃatʃ-iʃt kari-v di-ən
+cat-PL.NOM and dog-PL.NOM car-OBL.PL chase-1/3PL.NPST
+Cats and dogs chase cars
+
+For “cat” we would see “piʃ” and “mɨr”, the latter being incorrect. This is because when we first started building our mmt we thought we didn’t have a word for cat so we changed “mɨr” to mean “cat” when it actually means “apple”. We changed it back which improved generation with sentences containing “cat”.
+
+mɨr := Common_Nouns-noun-lex &
+ [ STEM < "mɨr" >,
+   SYNSEM.LKEYS.KEYREL.PRED "_apple_n_rel" ].
+
+
+ **********QUESTION 3 **********
+Other ambiguity cleanup
+
+1) We would get a spurious qeq value from this sentence:
+
+j-m=i spo kitob
+DEM-PROX=3SG 1PL.GEN book
+'This is our book.'
+
+That was because when we previously removed an incorrect exist_q_rel, we did not remove the qeq associated with it in the n-bar-predicate rule.
+
+n-bar-predicate-rule := unary-phrase & nocoord &
+  [ SYNSEM [ LOCAL.CAT [ HEAD verb & [ MOD < > ],
+                   VAL [ SPEC < >,
+                          COMPS < >,
+                          SPR < >,
+                          SUBJ < [ LOCAL [ CONT.HOOK.INDEX #arg1,
+                             CAT [ HEAD noun,
+                                VAL.SPR < >  ] ] ] >] ],
+             NON-LOCAL #nl ],
+    C-CONT [ HOOK [ LTOP #ltop,
+            INDEX #index,
+            XARG #arg1 ],
+         RELS.LIST < arg12-ev-relation &
+           [ PRED "_be_v_id_rel",
+             LBL #ltop,
+             ARG0 #index,
+             ARG1 #arg1,
+             ARG2 #arg2 ] >,
+         HCONS.LIST <  > ],
+    ARGS < [ SYNSEM [ LOCAL [ CAT [ HEAD noun & [CASE real-case],
+                    VAL.SPR < > ],
+                          CONT.HOOK [ INDEX #arg2 ]],
+                  NON-LOCAL #nl ]] > ].
+
+2) Our noun “j-a-w” in the following sentence:
+j-m=i j-a-w kitob
+DEM-PROX=3SG DEM-MED-PRO book
+'This is his/her/its book.'
+
+Would give parses where it was ambiguously a pronoun or an adnominal possession since it could be either depending on the context. We further constrained the CASE values of each to prevent this.
+
+3SG-POSS-noun-lex := poss-pron1-noun-lex &
+ [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG [ PER 3rd,
+                                      NUM sg ],
+   SYNSEM.LOCAL.CAT.HEAD.CASE poss-case
+   ].
+
+noun1-noun-lex := noun-lex &
+ [ SYNSEM.LOCAL [ CAT.HEAD.CASE real-case,
+                  CAT.HEAD.PRON +,
+                  CONT.HOOK.INDEX.PNG [ PER 3rd,
+                                        NUM sg ] ] ].
+ **********QUESTION 4 **********
+MT comparisons
+
+1) ʃatʃ-iʃt rɨçɨp-ən
+   dog-PL.NOM sleep-1/3PL.NPST
+   “Dogs sleep”
+ENG TO WBL: 
+Works with 4 results.
+SJE TO WBL: 
+Works with 4 results. 
+
+2)ʃatʃ-iʃt kar-v di-ən 
+Dogs chase cars
+ENG TO WBL:
+Works with 32 results. 
+SJE TO WBL:
+ Works with 32 results. 
+
+3) wuz to di-əm
+“I chase you”
+ENG TO WBL:
+Works with 42 results.
+SJE TO WBL:
+Works with 18 results.
+
+4)ʃatʃ-iʃt jaw-ən
+“Dogs eat”
+ENG TO WBL:
+Works with 4 results.
+SJE TO WBL:
+Works with 4 results. 
+
+5)j-a ʃatʃ-iʃt kar-v nə=di-ən
+“The dogs dont chase cars”
+ENG TO WBL:
+Doesn’t work because MRS difference between eng INDEX.TENSE present and wbl INDEX.TENSE tense and coindexing of ARG0 of “chase” 
+SJE TO WBL:
+Doesn’t work because same MRS difference.
+
+6)maʐ-r=ʂ sədɨj-t ki taw malɨm ki ʃatʃ-iʃt kar-v di-ən
+I think that you know that dogs chase cars
+ENG TO WBL:
+Doesn’t work because our wbl grammar does not parse the target sentence.
+SJE TO WBL:
+Doesn’t work because our string does not parse.
+
+7) maʐ pers-əm ki taw malɨm ki ʃatʃ-iʃt kar-i di-ən
+I ask whether you know that dogs chase cars
+ENG TO WBL:
+Doesn’t work because our string does not parse.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+8)piʃ-iʃt woz ʃatʃ-iʃt kari-v di-ən
+Cats and dogs chase cars
+ENG TO WBL:
+Works with 480 results. 
+SJE TO WBL:
+Works with 384 results.
+
+9) ʃatʃ-iʃt kar-v di-ən woz piʃ-iʃt ʃatʃ-iʃt-v di-ən
+Dogs chase cars and cats chase dogs
+ENG TO WBL:
+Doesn’t work because ‘piʃ-iʃt’ does not appear in wbl’s lexicon
+SJE TO WBL:
+Doesn’t work because our string does not parse.
+
+10) piʃ-iʃt ʃatʃ-iʃt-v di-ən woz rɨçɨp-ən
+Cats chase dogs and sleep
+We didn’t address conjunctions
+ENG TO WBL:
+Works with 320 results.
+SJE TO WBL:
+Works with 320 results. 
+
+11) piʃ-iʃt ʃatʃ-iʃt-i di-ən=a
+Do cats chase dogs
+ENG TO WBL:
+Works with 32 results. -
+SJE TO WBL:
+Works with 32 results. 
+
+12)dzəqlaj ʃatʃ-iʃt jaw-ən
+Hungry dogs eat
+ENG TO WBL:
+Doesn’t work because our string does not parse.
+SJE TO WBL:
+Doesn’t work because our string does not parse.
+
+13)ʃatʃ-iʃt tə-m stor jaw-ən
+Dogs in the park eat
+ENG TO WBL:
+Doesn’t work because our string does not parse.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+14)ʃatʃ-iʃt jaw-ən tə-m stor
+Dogs eat in the park
+ENG TO WBL:
+Doesn’t work because our string does not parse.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+15)j-a ʃatʃ-iʃt priʃon
+The dogs are hungry
+ENG TO WBL:
+Works with 2 results.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+16)j-a ʃatʃ-iʃt tə-m stor
+The dogs are in the park
+ENG TO WBL:
+Works with 28 results.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+17)j-a ʃatʃ-iʃt j-a mɨr-v
+The dogs are the cats
+ENG TO WBL:
+Works with 84 results. 
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+18)j-a ʃatʃ-iʃt-i kar rɨçɨp-t
+The dog s car sleeps
+ENG TO WBL:
+Works with 1 results. 
+SJE TO WBL:
+Works with 1 results. 
+
+19)ʐɨ ʃatʃ-iʃt rɨçɨp
+My dogs sleep
+ENG TO WBL:
+Works with  4 results. 
+SJE TO WBL:
+Works with 4 results. 
+
+20)kuj rɨçɨp
+Who sleeps
+ENG TO WBL: We didn’t address wh-questions
+Doesn’t work because of a transfer error 
+WARNING: EP '"wh_q_rel"' is not covered
+SJE TO WBL:
+Doesn’t work because of the same transfer error
+
+21)j-a ʃatʃ-iʃt di-ən ʧiz
+What do the dogs chase
+ENG TO WBL:
+Doesn’t work because of a transfer error 
+WARNING: EP '"_thing_n_rel"' is not covered
+WARNING: EP '"wh_q_rel"' is not covered
+SJE TO WBL:
+Doesn’t work because of the same transfer error
+
+22)taw-i sədɨj-t j-a ʃatʃ-iʃt di-ən ʧiz
+What do you think the dogs chase
+ENG TO WBL:
+Doesn’t work because of a transfer error 
+WARNING: EP '"_thing_n_rel"' is not covered
+WARNING: EP '"wh_q_rel"' is not covered
+SJE TO WBL:
+Doesn’t work because of the same transfer error
+
+23) target skipped 
+24) target skipped 
+25) target skipped 
+26) target skipped
+
+ **********QUESTION 5 **********
+
+5.1 Initial test corpus
+1. How many items parsed? 93/657
+2. What is the average number of parses per parsed item?  2.53
+3. How many parses did the most ambiguous item receive? 24
+
+5.2 Final test corpus
+1. How many items parsed?  79/657
+2. What is the average number of parses per parsed item? 1.94
+3. How many parses did the most ambiguous item receive? 24
+
+5.3 Initial testsuite
+1. How many items parsed? 20/77
+2. What is the average number of parses per parsed item? 1.15
+3. How many parses did the most ambiguous item receive? 3
+
+5.4 Final testsuite
+1. How many items parsed? 20/77
+2. What is the average number of parses per parsed item? 1.10
+3. How many parses did the most ambiguous item receive? 3
+Ti kitob
+2SG.GEN book
+“Your book”
+
+This sentence parses ambiguously because it can be optionally licensed by the n-bar-predicate rule even though there is only one noun here. Not sure what is happening here. 
+

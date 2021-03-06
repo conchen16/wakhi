@@ -1,0 +1,24 @@
+1670@@@@-1@@j-m=i j-a dkon kumd=əm ki wuz retʂ-tu@@@@1@7@DEM -PROX ==3SG DEM -MED store which ==1SG COMP 1SG.NOM go -PLPF // This is the store that I went to.@@
+1950@@@@-1@@j-a-w çat ki tu =əp j-a kitob dʒoj-t@@@@1@8@DEM -MED PRO REFL COMP 2SG.NOM =FUT DEM -MED book read -3SG.NPST // He said that you would read the book.@@
+3760@@@@-1@@j-m=i j-a kitob kumd ki j-a ðaj dʒoj-t@@@@1@8@DEM -PROX ==3SG DEM -MED book which COMP DEM -MED man read -PST // This is the book that the man read.@@
+340@@@@-1@@wuz=əp j-m woz tu=əp j-a-w jaw-∅@@@@1@6@1SG.NOM =FUT DEM -PROX and 2SG.NOM =FUT DEM -MED PRO eat -2SG.NPST // I will (eat) this and you will eat that.@@
+4400@@@@-1@@j-m=i j-a ðaj kumd ki j-a kitob dʒoj-tk@@@@1@8@DEM -PROX ==3SG DEM -MED man which COMP DEM -MED book read -PRF // This is the man who read the book.@@
+5080@@@@-1@@j-m=i j-a ðaj kumd-r=ət ki j-a kitob rand-tu@@@@1@8@DEM -PROX ==3SG DEM -MED man which -DAT ==2SG COMP DEM -MED book give -PLPF // This is the man you gave the book to.@@
+5090@@@@-1@@j-m=i j-a ðaj kumd-i kitob ki maʐ dʒoj-t@@@@1@8@DEM -PROX ==3SG DEM -MED man which -OBL book COMP 1SG.OBL read -PST // This is the man whose book I read.@@
+6440@@@@-1@@j-m=i j-a ðaj kumd-i kitob=əm ki dʒoj-t@@@@1@7@DEM -PROX ==3SG DEM -MED man which -OBL book ==1SG COMP read -PST // This is the man whose book I read.@@
+520@@@@-1@@j-a-w çat ki j-a-w j-a kitob dʒoj-tk@@@@1@7@DEM -MED PRO REFL COMP DEM -MED PRO DEM -MED book read -PRF // He said that he (someone else or self) read the book.@@
+530@@@@-1@@j-a-w çat ki maʐ j-a kitob dʒoj-tk .@@@@1@8@DEM -MED PRO REFL COMP 1SG.OBL DEM -MED book read -PRF . // He said that I had read the book (some time ago).@@
+1050@@@@-1@@wuz=əp j-m jaw-əm woz tu j-a jor@@@@1@7@1SG.NOM =FUT DEM -PROX eat -1SG.NPST and 2SG.NOM DEM -MED other // I will eat this and you will eat that.@@
+1060@@@@-1@@wuz=əp j-m woz tu j-a-w jaw-∅@@@@1@6@1SG.NOM =FUT DEM -PROX and 2SG.NOM DEM -MED PRO eat -2SG.NPST // None@@
+1270@@@@-1@@wuz=əp j-m woz tu j-a-w j-a-w@@@@1@6@1SG.NOM =FUT DEM -PROX and 2SG.NOM DEM -MED PRO DEM -MED PRO // I will eat this and you will eat that.@@
+1310@@@@-1@@j-a-w çat ki maʐ j-a kitob dʒoj-tk@@@@1@7@DEM -MED PRO REFL COMP 1SG.OBL DEM -MED book read -PRF // He said that I read the book.  Or He said "I read the book."@@
+1320@@@@-1@@j-a-w çat ki tu=ət j-a kitob dʒoj-ən-r@@@@1@7@DEM -MED PRO REFL COMP 2SG.NOM ==2SG DEM -MED book read -GER -DAT // ???@@
+2560@@@@-1@@John=əp puv-t=ət wuz jaw-əm@@@@1@4@NO_GLOSS =FUT drink -PST =and 1SG.NOM eat -1SG.NPST // John will drink and I will eat.@@
+2610@@@@-1@@wuz=əm gəfs-t wuz=əm jaw-t@@@@1@4@1SG.NOM ==1SG run -PST 1SG.NOM ==1SG eat -PST // I ran, I ate@@
+3260@@@@-1@@wuz=əm gəfs-t=ət jaw-t=əm@@@@1@3@1SG.NOM ==1SG run -PST =and eat -PST ==1SG // I ran and ate@@
+4050@@@@-1@@j-a-w çat ki maʐ j-a kitob dʒoj-t .@@@@1@8@DEM -MED PRO REFL COMP 1SG.OBL DEM -MED book read -3SG.NPST . // He said that I read the book (recently)@@
+4680@@@@-1@@wuz=əp j-m woz tu=əp j-a-w j-a-w@@@@1@6@1SG.NOM =FUT DEM -PROX and 2SG.NOM =FUT DEM -MED PRO DEM -MED PRO // I will eat this and you will eat that.@@
+6060@@@@-1@@j-a-w çat ki maʐ j-a kitob dʒoj-tu@@@@1@7@DEM -MED PRO REFL COMP 1SG.OBL DEM -MED book read -PLPF // He said that I read the book (a long time ago).@@
+6430@@@@-1@@j-a-w çan-t ki maʐ j-a kitob dʒoj-tk@@@@1@7@DEM -MED PRO say -PST COMP 1SG.OBL DEM -ADJ book read -PRF // He said that I read the book.@@
+3430@@@@-1@@maʐ j-a-v liman nə=di-ən jeçk goç-tu .@@@@1@7@1SG.OBL DEM -MED -OBL.PL each other NEG= hit -GER accustomed make -PLPF . // I taught them not to hit each other.@@
+5490@@@@-1@@maʐ jaw-i çat nə=di-ən jeçk goç-tu .@@@@1@7@1SG.OBL DEM -OBL REFL NEG= hit -GER accustomed make -PLPF . // I taught him not to hit himself@@
