@@ -1,0 +1,474 @@
+Wakhi
+LAB 8
+Connie Chen
+Dongqi Su
+
+ **********QUESTION 1 **********
+We will address our adnominal possession phenomenon. Our descriptive grammar didn’t have anything to say about possessives so the changes we made are based on the patterns we see in our test corpus. There are 4 other adnominal possessives that we implemented this week.
+The 1PL and 2SG possessives have the genitive case feature. 
+
+#1PL possessive
+#1520
+spo kitob
+1PL.GEN book
+Our book
+
+#2SG possessive
+#6310
+ti kitob
+2SG.GEN book
+Your book
+
+The 2PL possessive also has the genitive case feature. However, as a non-possessive it has the 2PL oblique case feature.
+
+#2PL possessive
+#2870
+sav kitob
+2PL.GEN book
+Your (plural) book
+
+#2PL obligative
+#3490
+wuz sav win-əm
+1SG.NOM 2PL.OBL see-1SG.NPST
+I see you (plural).
+
+It is currently in the lexicon with the choices so there might be ambiguity when parsing with this word in a sentence:
+  noun30_name=noun30
+noun30_pron=on
+noun30_feat1_name=person
+noun30_feat1_value=2nd
+noun30_feat2_name=number
+noun30_feat2_value=pl
+noun30_feat3_name=case
+noun30_feat3_value=gen, obl
+  noun30_det=opt
+noun30_stem1_orth=sav
+noun30_stem1_pred=_pron_n_rel
+
+The 3SG possessive is the same as the 3SG non-possessive pronoun.
+
+#3SG possessive
+#2860
+j-a-w kitob
+DEM-MED-PRO book
+His/her/its book
+
+#3SG non-possessive pronoun
+j-a-w maʐ plon-ɨv-t
+DEM-MED-PRO 1SG.OBL fall-CAUS-PST
+He/She/It tripped me.
+
+It is currently in our lexicon with the choices so there will be ambiguity when parsing with this word in a sentence:
+  noun1_name=noun1
+noun1_pron=on
+noun1_feat1_name=person
+noun1_feat1_value=3rd
+noun1_feat2_name=number
+noun1_feat2_value=sg
+noun1_det=opt
+noun1_stem1_orth=j-a-w
+noun1_stem1_pred=_pron_n_rel
+ **********QUESTION 2 **********
+
+We added these 4 possessives to lexicon.tdl:
+1PL_GEN-noun := 1PL_GEN-noun-lex &
+ [ STEM < "spo" > ].
+
+2SG_GEN-noun := 2SG_GEN-noun-lex &
+ [ STEM < "ti" > ].
+
+2PL_GEN-noun := 2PL_GEN-noun-lex &
+ [ STEM < "sav" > ].
+
+3SG-POSS-noun := 3SG-POSS-noun-lex &
+ [ STEM < "j-a-w" > ].
+
+Then we added their respective lexical types with their respective constraints to wbl.tdl:
+1PL_GEN-noun-lex := poss-pron1-noun-lex &
+ [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG [ PER 1st,
+                                      NUM pl ] ].
+
+2SG_GEN-noun-lex := poss-pron1-noun-lex &
+ [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG [ PER 2nd,
+                                      NUM sg ] ].
+
+2PL_GEN-noun-lex := poss-pron1-noun-lex &
+ [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG [ PER 2nd,
+                                      NUM pl ] ].
+
+3SG-POSS-noun-lex := poss-pron1-noun-lex &
+ [ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG [ PER 3rd,
+                                      NUM sg ] ].
+
+They all have the same supertype which is:
+
+poss-pron1-noun-lex := non-local-none-lex-item &
+ [ SYNSEM [ LKEYS.ALTKEYREL #altkeyrel & noun-relation &
+                            [ PRED "pron_rel",
+                              LBL #ltop,
+                              ARG0 #possessor &
+                                   [ COG-ST activ-or-more,
+                                     SPECI + ] ],
+            LOCAL [ CONT [ HOOK [ INDEX #possessor,
+                                  LTOP #ltop ],
+                           RELS.LIST < #altkeyrel >,
+                           HCONS.LIST < > ],
+                    CAT [ VAL [ SPR < [ LOCAL.CAT.HEAD det,
+                                        OPT + ] >,
+                                COMPS olist,
+                                SUBJ olist,
+                                SPEC < > ],
+                          HEAD noun &
+                               [ PRON +,
+                                 POSSESSOR possessor-pron-1,
+                                 CASE poss-case ] ] ] ] ].
+
+We also added the rule to license possessives to rules.tdl:
+poss-unary-pron-1 := poss-unary-phrase-pron-1.
+
+Where its super-type has the constraints:
+poss-unary-phrase-pron-1 := poss-unary-phrase &
+ [ ARGS < [ SYNSEM.LOCAL [COORD -, CAT.HEAD.POSSESSOR possessor-pron-1 ] ] >,
+   SYNSEM.LOCAL.CAT [ HEAD.SPEC-INIT +,
+                      VAL.SPEC.FIRST.LOCAL.CAT.POSSESSUM nonpossessive ] ].
+
+
+When we first started implementing these four possessives, the customization system made a poss-unary-phrase-pron rule for each of the 4 possessives. Since they all contained the same constraints as one another and was causing ambiguity in parses such as a possessive being licensed by poss-unary-phrase-pron-1, poss-unary-phrase-pron-2, and etc., we decided to have only one poss-unary-phrase-pron rule that would license all the adnominal possessives.
+
+These 3 all have only one parse and have the correct mrs.
+#1PL
+j-m=i spo kitob
+DEM-PROX=3SG 1PL.GEN book
+'This is our book.'
+
+#2SG
+j-m=i ti kitob
+DEM-PROX=3SG 2SG.GEN book
+'This is your book.'
+
+#2PL
+j-m=i sav kitob
+DEM-PROX=3SG 2PL.GEN book
+'This is your book.'
+
+This sentence gives 2 parses. As mentioned earlier, “j-a-w” is also in the lexicon as a non-possessive pronoun which is what licenses “j-a-w” in the incorrect parse.
+
+#3SG
+j-m=i j-a-w kitob
+DEM-PROX=3SG DEM-MED-PRO book
+'This is his/her/its book.'
+
+ **********QUESTION 3 **********
+We had a lot of parses with the incorrect word order in mt which we brought up for interactive debugging.
+
+This rule was commented out because it is not used:
+head-subj := head-subj-phrase.
+
+The super-type of this rule was changed to one that stated that aux takes the HOOK of their first complements as a raising verb (?):
+arg-comp-aux-no-pred := trans-first-arg-raising-lex-item-2 & aux-lex &
+ [ SYNSEM.LOCAL [ CAT.VAL [ SPEC < >,
+                            COMPS < #comps >,
+                            SUBJ < #subj &
+                                   [ LOCAL.CAT.HEAD.CASE real-case ] > ],
+                  CONT.HOOK.XARG #xarg ],
+   ARG-ST < #subj &
+            [ LOCAL [ CAT [ HEAD noun &
+                                 [ CASE #case ],
+                            VAL [ SUBJ < >,
+                                  SPR < >,
+                                  SPEC < >,
+                                  COMPS < > ] ],
+                      CONT.HOOK.INDEX #xarg ] ],
+            #comps &
+            [ LIGHT +,
+              LOCAL [ CONT.HOOK.XARG #xarg,
+                      CAT [ HEAD +vj & [ AUX - ],
+                            VAL [ COMPS < >,
+                                  SUBJ < [ LOCAL.CAT.HEAD.CASE #case ] > ] ] ] ] > ].
+
+Emily also made changes to these rules but we don’t understand what they mean:
+
+head-initial-head-nexus := head-initial.; &
+;  [ SYNSEM.LOCAL.CAT.MC #mc & na,
+;    HEAD-DTR.SYNSEM.LOCAL.CAT.MC #mc ].
+
+head-final-head-nexus := head-final. ;&
+;  [ SYNSEM.LOCAL.CAT.MC bool,
+;    HEAD-DTR.SYNSEM.LOCAL.CAT.MC na ].
+
+;head-subj-phrase := decl-head-subj-phrase & head-initial-head-nexus.
+
+subj-head-phrase := decl-head-subj-phrase & head-final-head-nexus &
+ [ HEAD-DTR.SYNSEM.LOCAL.CAT.VAL.COMPS < > ].
+
+---------------------
+We begin to address our incorrect generations in the MT starting with the first sentence: 
+
+ʃatʃ-iʃt rɨçɨp-ən
+dog-PL.NOM sleep-1/3PL.NPST
+Dogs sleep
+
+The MT generates 40 results where there “ʃatʃ” and “rɨçɨp” can occur with or without the correct suffixes. Additionally, “rɨçɨp” can occur with many combinations of incorrect suffixes:
+ʃatʃ rɨçɨp-r
+Dog sleep-DAT
+
+ʃatʃ-iʃt rɨçɨp-ak-r
+
+
+Comparing the mrs of “Dogs sleep” in English and Wakhi, we noticed that “sleep” only has the one argument “Dogs” in the English mrs. In Wakhi, “sleep” had two arguments where the second one was not referencing anything. This is because all our common verbs are under one class type Trans_and_Intrans_Verbs-verb-lex that says the verbs in this type are all transitive.
+
+We added the verb meaning “sleep” to the intrans_verb type class where case nom is specified on the subject and it’s intransitive. In the wbl.tdl “sleep” is:
+
+rɨçɨp := Intrans_Verb-verb-lex &
+  [ STEM < "rɨçɨp" >,
+    SYNSEM.LKEYS.KEYREL.PRED "_sleep_v_rel" ].
+
+We added the super-type to wbl.tdl:
+
+Intrans_Verb-verb-lex := nom-intransitive-verb-lex &
+ [ SYNSEM.LOCAL.CAT.VAL.SUBJ.FIRST.LOCAL.CAT.HEAD.CASE nom ].
+
+Now the sentence won’t parse at all. Looking at the parse chart,“rɨçɨp-ən” is being licensed only by a VP “rɨçɨp” when it should’ve also been licensed by the 1/3PL.NPST suffix rule. We have to include Intrans_Verb-verb-lex as a daughter of the 1/3PL.NPST suffix rule in wbl.tdl. 
+
+verb-pc4-lex-rule-super := add-only-no-ccont-rule & infl-lex-rule &
+ [ DTR verb-pc4-rule-dtr ].
+
+3PL_1PL_NPST_Verb_Suffix-lex-rule := verb-pc4-lex-rule-super &
+ [ SYNSEM.LOCAL [ CONT.HOOK.INDEX.E.TENSE npst,
+                  CAT.VAL.SUBJ.FIRST.LOCAL.CONT.HOOK.INDEX.PNG [ NUM pl,
+                                                                 PER 1st-or-3rd ] ] ]
+
+Where verb-pc4-rule-dtr is added as a super type of Intrans_Verb-verb-lex. Making these changes reduced the number of mt generations from 40 to 2. The correct parse is still not present. The two parses are
+
+ʃatʃ rɨçɨp
+dog sleep
+
+ʃatʃ-iʃt rɨçɨp
+dog-PL.NOM sleep
+
+We are missing the  1/3PL.NPST suffix “-ən”. Looking at the mrs, we noticed that the tenses of the Wakhi and English were different. English had present tense while Wakhi was npst. The descriptive grammar states that Wakhi doesn’t have a present tense and its nonpast tense is the most prominent tense used in the language. In the IGT, the translation of nonpast Wakhi verbs would be present tense in English. So we made the change in the semi.vpm from npst <> npst to npst <> present. This brought our number of generation results from 2 to 4, but we managed to add the correct suffix on. The fourth result is the correct one.
+
+ʃatʃ rɨçɨp
+ʃatʃ-iʃt rɨçɨp
+ʃatʃ rɨçɨp-ən
+ʃatʃ-iʃt rɨçɨp-ən
+
+“ʃatʃ”  currently has the super-type Common_Nouns-noun-lex which has the constraints
+[ SYNSEM.LOCAL.CONT.HOOK.INDEX.PNG.PER 3rd ].
+Since the mrs of both English and Wakhi now look the same for “Dogs sleep”. We are not sure where to start addressing the incorrect generations of “ʃatʃ”  without “-iʃt”. These generations are basically saying that the “dog” and “dogs” in Wakhi both mean “dogs” in English. We are still struggling with how to decrease incorrect suffix generation.
+
+From the 168 generations of  “Dogs chase cars”, “-r” was a recurring suffix added incorrectly on the verb:
+
+ʃatʃ kar di-r
+dog  car chase-DAT
+
+we noticed that “-r” didn’t have any constraints on the lex rule licensing it so we added dative case to it from what we saw in the test corpus.
+
+verb-pc6_lrt1-lex-rule := verb-pc6-lex-rule-super &
+ [ SYNSEM.LOCAL.CAT.HEAD [ CASE dat ] ].
+
+This brought the number of generations down from 168 to 88.
+
+ **********QUESTION 4 **********
+1) ʃatʃ-iʃt rɨçɨp-ən
+   dog-PL.NOM sleep-1/3PL.NPST
+   “Dogs sleep”
+ENG TO WBL: 
+Works with 4 results.
+SJE TO WBL: 
+Works with 4 results. 
+
+2)ʃatʃ-iʃt kar-v di-ən 
+Dogs chase cars
+ENG TO WBL:
+Works with 88 results. 
+SJE TO WBL:
+ Works with 88 results. 
+
+3) wuz to di-əm
+“I chase you”
+ENG TO WBL:
+Works with 900 results.
+SJE TO WBL:
+Works with 420 results.
+
+4)
+“Dogs eat”
+ENG TO WBL:
+Works with 22 results.
+SJE TO WBL:
+Works with 66 results. 
+
+5)
+“The dogs dont chase cars”
+ENG TO WBL:
+Works with 40 results.
+SJE TO WBL:
+Works with 40 results.
+
+6)
+I think that you know that dogs chase cars
+ENG TO WBL:
+Doesn’t work because our wbl grammar does not parse the target sentence.
+SJE TO WBL:
+Doesn’t work because our string does not parse.
+
+7) maʐ pers-əm ki taw malɨm ki ʃatʃ-iʃt kar-i di-ən
+I ask whether you know that dogs chase cars
+ENG TO WBL:
+Doesn’t work because our string does not parse.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+8)
+Cats and dogs chase cars
+ENG TO WBL:
+Works with 1152 results. 
+SJE TO WBL:
+Works with 1056 results.
+
+9) ʃatʃ-iʃt kar-v di-ən woz piʃ-iʃt ʃatʃ-iʃt-v di-ən
+Dogs chase cars and cats chase dogs
+ENG TO WBL:
+Doesn’t work because ‘piʃ-iʃt’ does not appear in wbl’s lexicon
+SJE TO WBL:
+Doesn’t work because our string does not parse.
+
+10) piʃ-iʃt ʃatʃ-iʃt-v di-ən woz rɨçɨp-ən
+Cats chase dogs and sleep
+ENG TO WBL:
+Works with 880 results.
+SJE TO WBL:
+Works with 880 results. 
+
+11) piʃ-iʃt ʃatʃ-iʃt-i di-ən=a
+Do cats chase dogs
+ENG TO WBL:
+Works with 88 results. -
+SJE TO WBL:
+Works with 88 results. 
+
+12)dzəqlaj ʃatʃ-iʃt jaw-ən
+Hungry dogs eat
+ENG TO WBL:
+Doesn’t work because our string does not parse.
+SJE TO WBL:
+Doesn’t work because our string does not parse.
+
+13)ʃatʃ-iʃt tə-m stor jaw-ən
+Dogs in the park eat
+ENG TO WBL:
+Doesn’t work because our string does not parse.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+14)ʃatʃ-iʃt jaw-ən tə-m stor
+Dogs eat in the park
+ENG TO WBL:
+Doesn’t work because our string does not parse.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+15)j-a ʃatʃ-iʃt priʃon
+The dogs are hungry
+ENG TO WBL:
+Works with 2 results.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+16)j-a ʃatʃ-iʃt tə-m stor
+The dogs are in the park
+ENG TO WBL:
+Works with 28 results.
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+17)j-a ʃatʃ-iʃt j-a mɨr-v
+The dogs are the cats
+ENG TO WBL:
+Works with 84 results. 
+SJE TO WBL:
+Doesn’t work because the sentence is skipped in sje.txt.
+
+18)j-a ʃatʃ-iʃt-i kar rɨçɨp-t
+The dog s car sleeps
+ENG TO WBL:
+Works with 1 results. 
+SJE TO WBL:
+Works with 1 results. 
+
+19)ʐɨ ʃatʃ-iʃt rɨçɨp
+My dogs sleep
+ENG TO WBL:
+Works with  12 results. 
+SJE TO WBL:
+Works with 12 results. 
+
+20)kuj rɨçɨp
+Who sleeps
+ENG TO WBL:
+Doesn’t work because of a transfer error 
+WARNING: EP '"wh_q_rel"' is not covered
+SJE TO WBL:
+Doesn’t work because of the same transfer error
+
+21)j-a ʃatʃ-iʃt di-ən ʧiz
+What do the dogs chase
+ENG TO WBL:
+Doesn’t work because of a transfer error 
+WARNING: EP '"_thing_n_rel"' is not covered
+WARNING: EP '"wh_q_rel"' is not covered
+SJE TO WBL:
+Doesn’t work because of the same transfer error
+
+22)taw-i sədɨj-t j-a ʃatʃ-iʃt di-ən ʧiz
+What do you think the dogs chase
+ENG TO WBL:
+Doesn’t work because of a transfer error 
+WARNING: EP '"_thing_n_rel"' is not covered
+WARNING: EP '"wh_q_rel"' is not covered
+SJE TO WBL:
+Doesn’t work because of the same transfer error
+
+23) target skipped 
+24) target skipped 
+25) target skipped 
+26) target skipped 
+
+
+ **********QUESTION 5 **********
+5.1 Initial test corpus
+1. How many items parsed? 120/659
+2. What is the average number of parses per parsed item?  5.37
+3. How many parses did the most ambiguous item receive? 24
+
+5.2 Final test corpus
+1. How many items parsed?  93/659
+2. What is the average number of parses per parsed item? 2.53
+3. How many parses did the most ambiguous item receive? 24
+
+5.3 Initial testsuite
+1. How many items parsed? 20/77
+2. What is the average number of parses per parsed item? 3.95
+3. How many parses did the most ambiguous item receive? 15
+
+5.4 Final testsuite
+1. How many items parsed? 20/77
+2. What is the average number of parses per parsed item? 1.15
+3. How many parses did the most ambiguous item receive? 3
+
+It seems like the 2 sentences with the highest number of parses both have conjugations in them.
+
+#2600 with 24 parses
+maʐ di-t woz ʃaj-t
+1SG.OBL hit-PST and kill-3SG.NPST
+I hit and killed
+
+#6750 with 20 parses
+John puv-t woz jaw-t
+John drink-3SG.NPST and eat-PST
+John drank and ate
+
+The ambiguity arises from the different ways to license the different top, mid, and bottom coordination rules in combination with the Basic Head Opt Comp and Comp-Head rule.
+
